@@ -1,0 +1,70 @@
+{
+  "$schema": "./package.json.schema.json",
+  "name": "charon-color-picker",
+  "version": "1.0.21",
+  "description": "",
+  "keywords": [
+    "charon",
+    "extensions",
+    "color picker"
+  ],
+  "homepage": "https://github.com/gamedevware/charon-extensions",
+  "bugs": "https://github.com/gamedevware/charon-extensions/issues",
+  "author": "GameDevWare, Denis Zykov",
+  "license": "MIT",
+  "config": {
+    "customEditors": [
+      {
+        "id": "ext-color-picker",
+        "selector": "ext-color-picker-editor",
+        "name": "Color Picker",
+        "type": [
+          "Property",
+          "Grid"
+        ],
+        "dataTypes": [
+          "Text",
+          "Integer"
+        ]
+      }
+    ]
+  },
+  "main": "main.js",
+  "files": [
+    "styles.css"
+  ],
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build && copy package.json dist\\browser\\package.json && cd dist\\browser && npm pack",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^19.2.5",
+    "@angular/cli": "^19.2.5",
+    "@angular/compiler-cli": "^19.2.0",
+    "@types/jasmine": "~5.1.0",
+    "jasmine-core": "~5.6.0",
+    "karma": "~6.4.0",
+    "karma-chrome-launcher": "~3.2.0",
+    "karma-coverage": "~2.2.0",
+    "karma-jasmine": "~5.1.0",
+    "karma-jasmine-html-reporter": "~2.1.0",
+    "typescript": "~5.7.2"
+  },
+  "dependencies": {
+    "@angular/common": "^19.2.0",
+    "@angular/compiler": "^19.2.0",
+    "@angular/core": "^19.2.0",
+    "@angular/elements": "^19.2.4",
+    "@angular/forms": "^19.2.0",
+    "@angular/platform-browser": "^19.2.0",
+    "@angular/platform-browser-dynamic": "^19.2.0",
+    "@angular/router": "^19.2.0",
+    "charon-extensions": "^2.207.304",
+    "ngx-color-picker": "^19.0.0",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0"
+  }
+}

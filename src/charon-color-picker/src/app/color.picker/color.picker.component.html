@@ -1,0 +1,7 @@
+<div class="color-picker-trigger" (colorPickerChange)="this.updateFormControlValue($event)" [colorPicker]="this.color"
+    [style.background]="this.color" [cpOutputFormat]="this.outputFormat"
+    [cpDisableInput]="this.readOnly || this.disabled">
+</div>
+
+<input class="color-picker-input" #colorInput [value]="this.value" [disabled]="this.disabled"
+    [readOnly]="this.readOnly" [required]="this.required" (change)="this.updateFormControlValue(colorInput.value);">
