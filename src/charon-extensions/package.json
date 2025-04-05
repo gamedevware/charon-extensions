@@ -1,0 +1,32 @@
+{
+  "name": "charon-extensions",
+  "version": "2.207.304",
+  "description": "This is a package containing types for interaction with the Charon application.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gamedevware/charon-extensions.git"
+  },
+  "keywords": [
+    "charon",
+    "extensions"
+  ],
+  "bugs": {
+    "url": "https://github.com/gamedevware/charon-extensions/issues"
+  },
+  "homepage": "https://github.com/gamedevware/charon-extensions#readme",
+  "author": "GameDevWare, Denis Zykov",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "prepublish": "npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  }
+}
