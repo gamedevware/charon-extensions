@@ -1,0 +1,77 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "allOf": [
+        {
+            "$ref": "https://json.schemastore.org/package.json"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "config": {
+                    "type": "object",
+                    "properties": {
+                        "customEditors": {
+                            "type": "array",
+                            "nullable": true,
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "type": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "enum": [
+                                                "Property",
+                                                "Grid",
+                                                "Schema"
+                                            ]
+                                        }
+                                    },
+                                    "selector": {
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "dataTypes": {
+                                        "type": "array",
+                                        "nullable": true,
+                                        "items": {
+                                            "type": "string",
+                                            "enum": [
+                                                "Text",
+                                                "LocalizedText",
+                                                "Logical",
+                                                "Time",
+                                                "Date",
+                                                "Number",
+                                                "Integer",
+                                                "PickList",
+                                                "MultiPickList",
+                                                "Document",
+                                                "DocumentCollection",
+                                                "Reference",
+                                                "ReferenceCollection",
+                                                "Formula"
+                                            ]
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "id",
+                                    "type",
+                                    "selector",
+                                    "name"
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}
