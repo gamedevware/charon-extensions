@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Inpu
 import { CharonPropertyEditorElement, ERROR_CUSTOM_PROPERTY as ERROR_CUSTOM, ValueControl, ValueValidatorFn } from 'charon-extensions';
 import { ColorPickerService, Hsva, Rgba } from 'ngx-color-picker';
 import { debounceTime, from, startWith, Subscription } from 'rxjs';
+import { ColorOutputFormat, determineOutputFormat, encodeColor, formatColor, parseColorOrNull } from './color.functions';
 
 @Component({
   // Use 'ext' prefix for your components to avoid collisions with the original app
@@ -16,7 +17,7 @@ import { debounceTime, from, startWith, Subscription } from 'rxjs';
 })
 export class ColorPickerEditorComponent implements CharonPropertyEditorElement, OnDestroy {
   private _color: string;
-  private _formControl!: ValueControl<any>;
+  private _valueControl!: ValueControl<any>;
   private _subscription: Subscription | undefined;
 
   public get color(): string {
@@ -24,32 +25,32 @@ export class ColorPickerEditorComponent implements CharonPropertyEditorElement, 
   }
 
   public get readOnly(): boolean {
-    return this._formControl?.readOnly ?? false;
+    return this._valueControl?.readOnly ?? false;
   }
 
   public get disabled(): boolean {
-    return this._formControl?.disabled ?? false;
+    return this._valueControl?.disabled ?? false;
   }
 
   public get required(): boolean {
-    return this._formControl?.required ?? false;
+    return this._valueControl?.required ?? false;
   }
   public get value(): string {
-    return this._formControl?.value ?? '';
+    return this._valueControl?.value ?? '';
   }
 
-  public outputFormat: 'rgba' | 'hsla' | 'hex';
+  public outputFormat: ColorOutputFormat;
 
   @Input()
-  public get formControl(): ValueControl<any> {
-    return this._formControl;
+  public get valueControl(): ValueControl<any> {
+    return this._valueControl;
   }
-  public set formControl(value: ValueControl<any>) {
-    if (Object.is(this._formControl, value)) {
+  public set valueControl(value: ValueControl<any>) {
+    if (Object.is(this._valueControl, value)) {
       return;
     }
-    this._formControl = value;
-    this.onFormControlChanged();
+    this._valueControl = value;
+    this.onValueControlChanged();
   }
 
   @ViewChild('colorInput')
@@ -70,18 +71,18 @@ export class ColorPickerEditorComponent implements CharonPropertyEditorElement, 
   }
 
   /**
-   * Try to parse or decode the specified value and set it to `formControl`.
+   * Try to parse or decode the specified value and set it to `valueControl`.
    * Do nothing if the value is the same as the current one.
    */
   public updateFormControlValue(value: string): void {
-    if (!this.formControl) {
+    if (!this.valueControl) {
       return; // No form control is set
     }
 
     const hsva = this.colorPickerService.stringToHsva(value, true);
-    const schemaProperty = this.formControl.schemaProperty;
+    const schemaProperty = this.valueControl.schemaProperty;
 
-    let newFormControlValue = this.formControl.value;
+    let newFormControlValue = this.valueControl.value;
     let newColorValue = this._color;
     if (!hsva) {
       // Color parsing failed 
@@ -90,16 +91,15 @@ export class ColorPickerEditorComponent implements CharonPropertyEditorElement, 
       newColorValue = '';
 
     } else if (typeof value === 'number') {
-      newColorValue = this.formatColor(hsva);
-      newFormControlValue = this.encodeColor(hsva);
+      newColorValue = formatColor(hsva, this.outputFormat, this.colorPickerService);
+      newFormControlValue = encodeColor(hsva, this.colorPickerService);
     } else {
-      newColorValue = this.formatColor(hsva);
+      newColorValue = formatColor(hsva, this.outputFormat, this.colorPickerService);
       newFormControlValue = newColorValue;
-
     }
 
-    if (!schemaProperty.valuesAreEquals(this.formControl.value, newFormControlValue)) {
-      this.formControl.setValue(newFormControlValue);
+    if (!schemaProperty.valuesAreEquals(this.valueControl.value, newFormControlValue)) {
+      this.valueControl.setValue(newFormControlValue);
     }
     if (this._color !== newColorValue) {
       this._color = newColorValue;
@@ -109,26 +109,26 @@ export class ColorPickerEditorComponent implements CharonPropertyEditorElement, 
   }
 
   /**
-   * Event handler when `formControl` is changed.
-   * In this handler, we subscribe to value/state change events and dispose of the previous `formControl` subscription.
+   * Event handler when `valueControl` is changed.
+   * In this handler, we subscribe to value/state change events and dispose of the previous `valueControl` subscription.
    */
-  private onFormControlChanged(): void {
+  private onValueControlChanged(): void {
 
-    this.outputFormat = this.determineOutputFormat();
+    this.outputFormat = determineOutputFormat(this.valueControl.schemaProperty.getSpecification());
 
     this._subscription?.unsubscribe();
     this._subscription = new Subscription();
 
-    const newFormControl = this.formControl;
+    const newValueControl = this.valueControl;
 
     // React to value changes
     this._subscription.add(
-      from(newFormControl.valueChanges).pipe(
-        startWith(newFormControl.value),
+      from(newValueControl.valueChanges).pipe(
+        startWith(newValueControl.value),
         debounceTime(100),
       ).subscribe((value: any) => {
-        const valueHsva = this.parseColorOrNull(value);
-        const newColor = this.formatColor(valueHsva);
+        const valueHsva = parseColorOrNull(value, this.colorPickerService);
+        const newColor = formatColor(valueHsva, this.outputFormat, this.colorPickerService);
         if (this.color == newColor) {
           return; // not changed
         }
@@ -139,116 +139,37 @@ export class ColorPickerEditorComponent implements CharonPropertyEditorElement, 
 
     // React to validation or disable/enable changes
     this._subscription.add(
-      from(newFormControl.statusChanges)
+      from(newValueControl.statusChanges)
         .subscribe(_ => this.сhangeDetector.detectChanges())
     )
 
     // React to focus request
-    this._subscription.add(newFormControl.registerDoFocus((options?: FocusOptions) => {
+    this._subscription.add(newValueControl.registerDoFocus((options?: FocusOptions) => {
       const colorInputEl = this.colorInput?.nativeElement;
-      if (!colorInputEl) {
-        return;
-      }
-      setTimeout(() => {
-        colorInputEl.focus(options);
-
-        if (!options?.preventScroll) {
-          colorInputEl.selectionStart = 0;
-          colorInputEl.selectionEnd = colorInputEl.value?.length ?? 0;
-          colorInputEl.scrollIntoView({
-            block: 'center',
-            inline: 'center',
-          });
-        }
-      }, 0);
+      setTimeout(() => colorInputEl?.focus(options), 0);
     }));
 
     // Add custom color validation
     const colorValidator: ValueValidatorFn = this.validateValue.bind(this);
-    newFormControl.addValidators(colorValidator)
+    newValueControl.addValidators(colorValidator)
     // trigger `colorValidator` after addition
-    newFormControl.updateAllValueAndValidity({ onlySelf: true });
-    // Remove validator on `formControl` change
-    this._subscription.add(() => newFormControl.removeValidators(colorValidator));
+    newValueControl.updateAllValueAndValidity({ onlySelf: true });
+    // Remove validator on `valueControl` change
+    this._subscription.add(() => newValueControl.removeValidators(colorValidator));
 
     this.сhangeDetector.detectChanges();
-  }
-
-  /**
-   * Take HSVA color value and encode it into int32 (ARGB)
-   * @returns ARGB value of color
-   */
-  private encodeColor(value: Hsva | null): number {
-    if (!value) {
-      return 0;
-    }
-    var rgba = this.colorPickerService.hsvaToRgba(value);
-    const a = Math.max(0, Math.min(Math.round(rgba.a * 255), 255)) << 24; // Alpha (shifted to the highest byte)
-    const r = rgba.r << 16; // Red (shifted to second-highest byte)
-    const g = rgba.g << 8;  // Green (shifted to second-lowest byte)
-    const b = rgba.b;       // Blue (lowest byte)
-    return (a | r | g | b) | 0;
-  }
-  /**
-   * Take HSVA color value and format it as a string in `outputFormat` format
-   * @returns String formatted color value
-   */
-  private formatColor(value: Hsva | null): string {
-    return value ? this.colorPickerService.outputFormat(value, this.outputFormat, null) : ''
-  }
-  /**
-   * Try to parse a string color value or decode an int32 ARGB color value and return an HSVA color.
-   * @returns HSVA color value or null if parsing failed.
-   */
-  private parseColorOrNull(value: any): Hsva | null {
-    let parsedHsva: Hsva | null = null;
-    if (typeof value === 'number') {
-      const argbInteger = this.formControl.schemaProperty.convertFrom(value) | 0;
-      var rgba: Rgba = {
-        r: (argbInteger >> 16) & 0xFF,         // Extract red
-        g: (argbInteger >> 8) & 0xFF,          // Extract green
-        b: argbInteger & 0xFF,                 // Extract blue
-        a: ((argbInteger >> 24) & 0xFF) / 255, // Extract alpha and normalize to [0,1]
-      };
-      parsedHsva = this.colorPickerService.rgbaToHsva(rgba);
-    } else {
-      parsedHsva = this.colorPickerService.stringToHsva(value + '', true);
-    }
-    return parsedHsva;
   }
 
   /**
    * Validate color value
    */
   private validateValue(control: ValueControl): Object | null {
-    if (this.parseColorOrNull(control.value)) {
+    if (parseColorOrNull(control.value, this.colorPickerService)) {
       return null; // valid
     }
     return {
       // ERROR_CUSTOM errors displayed as-is
       [ERROR_CUSTOM]: `Invalid value for color in ${this.outputFormat.toUpperCase()} format.`
     };
-  }
-
-  /**
-   * Determine output format for current `formControl` or return default `hex` format.
-   */
-  private determineOutputFormat() {
-    let outputFormat: typeof this.outputFormat = 'hex';
-    for (const format of this.formControl.schemaProperty.getSpecification().get('format') ?? []) {
-      switch (format) {
-        case 'rgba':
-          outputFormat = 'rgba';
-          break;
-        case 'hsla':
-          outputFormat = 'hsla';
-          break;
-        case 'hex':
-        default:
-          outputFormat = 'hex';
-          break;
-      }
-    }
-    return outputFormat;
   }
 }

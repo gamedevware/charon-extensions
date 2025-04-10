@@ -1,6 +1,6 @@
 {
   "name": "charon-extensions",
-  "version": "2.207.304",
+  "version": "2.226.310",
   "description": "This is a package containing types for interaction with the Charon application.",
   "repository": {
     "type": "git",

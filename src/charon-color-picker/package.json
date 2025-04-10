@@ -1,7 +1,7 @@
 {
-  "$schema": "./package.json.schema.json",
+  "$schema": "https://raw.githubusercontent.com/gamedevware/charon-extensions/refs/heads/main/package.json.schema.json",
   "name": "charon-color-picker",
-  "version": "1.0.21",
+  "version": "1.0.22",
   "description": "",
   "keywords": [
     "charon",
@@ -62,7 +62,7 @@
     "@angular/platform-browser": "^19.2.0",
     "@angular/platform-browser-dynamic": "^19.2.0",
     "@angular/router": "^19.2.0",
-    "charon-extensions": "^2.207.304",
+    "charon-extensions": "^2.226.310",
     "ngx-color-picker": "^19.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"

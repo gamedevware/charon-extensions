@@ -1,9 +1,9 @@
 export declare interface CharonPropertyEditorElement {
-    formControl: ValueControl;
+    valueControl: ValueControl;
 }
 
 export declare interface CharonSchemaEditorElement {
-    formControl: DocumentControl;
+    documentControl: DocumentControl;
 }
 
 export declare interface DocumentControl<TValue = any> extends Omit<ValueControl, 'schemaProperty'> {
@@ -316,3 +316,39 @@ export const enum DataType {
     ReferenceCollection = 29,
     Formula = 35
 }
+
+
+/* eslint-disable @typescript-eslint/naming-convention */
+declare global {
+    type WithProperties<P> = {
+        [property in keyof P]: P[property];
+    };
+
+    interface DocumentFieldComponent { valueControl: ValueControl }
+    interface DocumentViewComponent { documentControl: DocumentControl }
+    interface DocumentFormViewComponent extends DocumentViewComponent { excludeProperties?: string[], includeProperties?: string[] }
+
+    interface HTMLElementTagNameMap {
+        // views
+        'charon-document-form-view': HTMLElement & WithProperties<DocumentFormViewComponent>;
+        'charon-document-json-view': HTMLElement & WithProperties<DocumentViewComponent>;
+
+        // fields
+        'charon-text-field': HTMLElement & WithProperties<DocumentFieldComponent>;
+        'charon-multiline-text-field': HTMLElement & WithProperties<DocumentFieldComponent>;
+        'charon-localized-text-field': HTMLElement & WithProperties<DocumentFieldComponent>;
+        'charon-multiline-localized-text-field': HTMLElement & WithProperties<DocumentFieldComponent>;
+        'charon-dropdown-logical-field': HTMLElement & WithProperties<DocumentFieldComponent>;
+        'charon-time-field': HTMLElement & WithProperties<DocumentFieldComponent>;
+        'charon-date-field': HTMLElement & WithProperties<DocumentFieldComponent>;
+        'charon-number-field': HTMLElement & WithProperties<DocumentFieldComponent>;
+        'charon-integer-field': HTMLElement & WithProperties<DocumentFieldComponent>;
+        'charon-dropdown-picklist-field': HTMLElement & WithProperties<DocumentFieldComponent>;
+        'charon-dropdown-multi-picklist-field': HTMLElement & WithProperties<DocumentFieldComponent>;
+        'charon-document-collection-field': HTMLElement & WithProperties<DocumentFieldComponent>;
+        'charon-reference-collection-field': HTMLElement & WithProperties<DocumentFieldComponent>;
+        'charon-formula-field': HTMLElement & WithProperties<DocumentFieldComponent>;
+        'charon-id-field': HTMLElement & WithProperties<DocumentFieldComponent>;
+    }
+}
+/* eslint-enable @typescript-eslint/naming-convention */
