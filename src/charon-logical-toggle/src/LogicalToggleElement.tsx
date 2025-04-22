@@ -1,10 +1,10 @@
-import { ValueControl } from "charon-extensions";
+import { ValueControl, CharonPropertyEditorElement } from "charon-extensions";
 import { createRoot } from 'react-dom/client';
 import { LogicalToggle } from "./LogicalToggle";
 import { BehaviorSubject, filter, from, map, startWith, Subscription } from "rxjs";
 
 
-class LogicalToggleElement extends HTMLElement {
+class LogicalToggleElement extends HTMLElement implements CharonPropertyEditorElement {
   private _valueControl?: ValueControl;
   private _subscription?: Subscription;
 
@@ -12,12 +12,12 @@ class LogicalToggleElement extends HTMLElement {
   public disabledState$: BehaviorSubject<boolean>;
 
   // Define the getter
-  get valueControl() {
-    return this._valueControl;
+  get valueControl(): ValueControl {
+    return this._valueControl!;
   }
 
   // Define the setter
-  set valueControl(value) {
+  set valueControl(value: ValueControl) {
     this._valueControl = value;
     this.onValueControlChanged();
   }

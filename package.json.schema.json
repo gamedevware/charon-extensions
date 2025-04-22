@@ -18,7 +18,8 @@
                                 "type": "object",
                                 "properties": {
                                     "id": {
-                                        "type": "string"
+                                        "type": "string",
+                                        "description": "Unique identifier of the field editor. Typically starts with 'ext', e.g., 'ext-color-picker-hex'."
                                     },
                                     "type": {
                                         "type": "array",
@@ -29,13 +30,20 @@
                                                 "Grid",
                                                 "Schema"
                                             ]
-                                        }
+                                        },
+                                        "description": "Editor usage type:\n- 'Property' — used as a field editor in forms.\n- 'Grid' — used as a cell editor in grids.\n- 'Schema' — replaces the entire form, e.g., with a graph or node editor."
                                     },
                                     "selector": {
-                                        "type": "string"
+                                        "type": "string",
+                                        "description": "Custom HTML element name registered with 'customElements.define'. Typically starts with 'ext', e.g., 'ext-color-picker'."
                                     },
                                     "name": {
-                                        "type": "string"
+                                        "type": "string",
+                                        "description": "Display name of the field editor. Shown in the UI, e.g., 'Color Picker (HEX)'."
+                                    },
+                                    "specification": {
+                                        "type": "string",
+                                        "description": "Additional key-value configuration parameters for the editor in URLSearchParams format. Example: 'palette=material&alpha=true'. These values ​​will be pushed into the Schema/Property specification dictionary at the time the Schema/Property is being created."
                                     },
                                     "dataTypes": {
                                         "type": "array",
@@ -58,7 +66,8 @@
                                                 "ReferenceCollection",
                                                 "Formula"
                                             ]
-                                        }
+                                        },
+                                        "description": "List of supported data types that this editor can handle."
                                     }
                                 },
                                 "required": [

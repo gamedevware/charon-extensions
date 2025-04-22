@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/gamedevware/charon-extensions/refs/heads/main/package.json.schema.json",
   "name": "charon-color-picker",
-  "version": "1.0.22",
+  "version": "1.0.23",
   "description": "",
   "keywords": [
     "charon",
@@ -15,9 +15,10 @@
   "config": {
     "customEditors": [
       {
-        "id": "ext-color-picker",
+        "id": "ext-color-picker-hex",
         "selector": "ext-color-picker-editor",
-        "name": "Color Picker",
+        "name": "Color Picker (Hex)",
+        "specification": "format=hex",
         "type": [
           "Property",
           "Grid"
@@ -25,6 +26,32 @@
         "dataTypes": [
           "Text",
           "Integer"
+        ]
+      },
+      {
+        "id": "ext-color-picker-hsla",
+        "selector": "ext-color-picker-editor",
+        "name": "Color Picker (HSLA)",
+        "specification": "format=hsla",
+        "type": [
+          "Property",
+          "Grid"
+        ],
+        "dataTypes": [
+          "Text"
+        ]
+      },
+      {
+        "id": "ext-color-picker-rgba",
+        "selector": "ext-color-picker-editor",
+        "name": "Color Picker (RGBA)",
+        "specification": "format=rgba",
+        "type": [
+          "Property",
+          "Grid"
+        ],
+        "dataTypes": [
+          "Text"
         ]
       }
     ]
