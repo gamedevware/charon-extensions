@@ -1,0 +1,2 @@
+
+export type TeardownLogic = () => void;
