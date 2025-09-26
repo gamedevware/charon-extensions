@@ -1,4 +1,4 @@
-export const enum DataType {
+export enum DataType {
     Text = 0,
     LocalizedText = 1,
     Logical = 5,

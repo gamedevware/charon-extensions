@@ -3,6 +3,8 @@ import { RootDocumentControl, ValueControl } from './controls';
 export * from './reactive';
 export * from './controls';
 export * from './metadata';
+export * from './time.span';
+export * from './json.pointer';
 
 export const ERROR_CUSTOM_PROPERTY = 'custom';
 

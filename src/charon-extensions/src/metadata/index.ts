@@ -1,6 +1,5 @@
 export * from './data.type';
 export * from './id.generator.type';
-export * from './json.pointer';
 export * from './language';
 export * from './metadata';
 export * from './requirement';

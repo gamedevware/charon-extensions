@@ -1,4 +1,4 @@
-import { Schema } from "./schema";
+import { Schema } from "./metadata";
 
 export declare interface SchemaReference {
     readonly id: string;

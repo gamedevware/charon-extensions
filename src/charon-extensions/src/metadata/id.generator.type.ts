@@ -1,4 +1,4 @@
-export const enum IdGeneratorType {
+export enum IdGeneratorType {
     None = 0,
     ObjectId = 1,
     Guid = 2,
