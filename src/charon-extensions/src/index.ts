@@ -1,4 +1,4 @@
-import { DocumentControl, ValueControl } from './controls';
+import { RootDocumentControl, ValueControl } from './controls';
 
 export * from './reactive';
 export * from './controls';
@@ -12,7 +12,7 @@ declare global {
         [property in keyof P]: P[property];
     };
 
-    interface DocumentViewComponent { documentControl: DocumentControl }
+    interface DocumentViewComponent { documentControl: RootDocumentControl }
 
     interface DocumentFieldComponent { valueControl: ValueControl }
     interface DocumentFormViewComponent extends DocumentViewComponent { excludeProperties?: string[], includeProperties?: string[] }

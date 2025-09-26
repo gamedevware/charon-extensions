@@ -1,5 +1,5 @@
-import { DocumentControl } from "./controls";
+import { RootDocumentControl } from "./controls";
 
 export declare interface CharonSchemaEditorElement {
-    documentControl: DocumentControl;
+    documentControl: RootDocumentControl;
 }
