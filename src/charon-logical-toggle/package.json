@@ -40,11 +40,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "charon-extensions": "^2.226.310",
+    "charon-extensions": "file:../charon-extensions",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-toggle": "^4.1.3",
-    "rxjs": "^7.8.2",
     "sass": "^1.86.3"
   },
   "devDependencies": {
