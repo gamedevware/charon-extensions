@@ -1,24 +1,22 @@
 import { Schema, SchemaProperty } from "../metadata";
 import { DataDocument } from "./data.document";
-import type { DocumentControls } from "./document.control";
+import type { DocumentControl } from "./document.control";
+import { RootDocumentControlServices } from "./root.document.services.services";
 import { ValueControl } from "./value.control";
 
 /**
  * Represents the root document control in a form hierarchy
- * @extends ValueControl
+ * @extends DocumentControl
  */
-export declare interface RootDocumentControl<T extends DataDocument = DataDocument> extends ValueControl<T> {
+export declare interface RootDocumentControl<T extends DataDocument = DataDocument> extends DocumentControl<T> {
     /** The complete JSON schema for this document */
     readonly schema: Schema;
 
     /** Schema property is undefined for root documents */
     readonly schemaProperty: SchemaProperty & undefined;
 
-    /** Type identifier for root document controls */
-    readonly type: 'document';
-
-    /** Child controls indexed by property name */
-    readonly controls: DocumentControls<T>;
+    /** Other services related to current context */
+    readonly services: Partial<RootDocumentControlServices>;
 }
 
 /**

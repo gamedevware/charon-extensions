@@ -1,4 +1,4 @@
-import { RootDocumentControl, ValueControl } from './controls';
+import type { DocumentControl, ValueControl } from './controls';
 
 export * from './reactive';
 export * from './controls';
@@ -17,13 +17,12 @@ declare global {
         [property in keyof P]: P[property];
     };
 
-    interface DocumentViewComponent { documentControl: RootDocumentControl }
-
+    interface DocumentViewComponent { documentControl: DocumentControl }
     interface DocumentFieldComponent { valueControl: ValueControl }
     interface DocumentFormViewComponent extends DocumentViewComponent { excludeProperties?: string[], includeProperties?: string[] }
     interface DocumentNumbersFieldComponent extends DocumentFieldComponent { components: string[]; isInteger: boolean }
     interface DocumentAllowMultipleFieldComponent extends DocumentFieldComponent { allowMultiple: boolean }
-    interface AssetPreviewComponent { valueControl: ValueControl; value: string; size: number }
+    interface AssetPreviewComponent { valueControl: DocumentControl | ValueControl; value: string; size: number }
 
     interface HTMLElementTagNameMap {
         // views

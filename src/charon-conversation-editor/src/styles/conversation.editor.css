@@ -1,0 +1,89 @@
+.ext-conversation-editor {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    position: relative;
+
+    --ext-panel-background-color: var(--app-white-background, white);
+
+    --ext-node-edge-color: var(--app-color-light-gray, lightgray);
+    --ext-node-border-color: var(--app-color-light-gray, lightgray);
+    --ext-node-hover-color: var(--app-color-gray, gray);
+    --ext-node-select-color: var(--app-color-primary, blue);
+
+    --xy-minimap-background-color-default: #fff;
+    --xy-minimap-mask-background-color-default: rgba(240, 240, 240, .6);
+    --xy-minimap-mask-stroke-color-default: transparent;
+    --xy-minimap-mask-stroke-width-default: 1;
+    --xy-minimap-node-background-color-default: #e2e2e2;
+    --xy-minimap-node-stroke-color-default: transparent;
+    --xy-minimap-node-stroke-width-default: 2;
+}
+
+.ext-conversation-editor .ext-ce-flow-graph {
+    flex: 1;
+    position: relative;
+}
+
+.ext-conversation-editor .react-flow__node {
+    display: flex;
+    flex-direction: column;
+
+    min-width: 100px;
+    width: 400px;
+    max-width: 800px;
+
+    padding: 24px;
+    border-radius: 16px;
+    border: 2px solid var(--ext-node-border-color);
+    background-color: var(--ext-panel-background-color);
+    box-shadow: 0px 4px 3px rgba(0, 0, 0, 0.02);
+
+    box-sizing: border-box;
+
+    font-family: var(--mdc-typography-font-family, unset);
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: -0.5px;
+}
+
+
+.ext-conversation-editor .react-flow__node.selectable:focus,
+.ext-conversation-editor .react-flow__node.selectable:hover,
+.ext-conversation-editor .react-flow__node.draggable:hover {
+    --ext-node-border-color: var(--ext-node-hover-color);
+}
+
+.ext-conversation-editor .react-flow__node.selectable.selected {
+    --ext-node-border-color: var(--ext-node-select-color);
+}
+
+.ext-conversation-editor .react-flow__edge .react-flow__edge-path {
+    stroke-width: 2px;
+    stroke: var(--ext-node-edge-color);
+}
+
+.ext-conversation-editor .react-flow__edge.selectable:hover .react-flow__edge-path {
+    stroke: var(--ext-node-hover-color);
+}
+
+.ext-conversation-editor .react-flow__edge.selectable.selected .react-flow__edge-path {
+    stroke: var(--ext-node-select-color);
+}
+
+.ext-conversation-editor .react-flow__handle {
+    color: var(--ext-node-border-color);
+}
+
+.ext-conversation-editor .react-flow__handle.connectionindicator:hover {
+    color: var(--ext-node-hover-color);
+    pointer-events: all;
+}
+
+.ext-conversation-editor .react-flow__handle.connectionindicator:focus,
+.ext-conversation-editor .react-flow__handle.connectingfrom,
+.ext-conversation-editor .react-flow__handle.connectingto {
+    color: var(--ext-node-select-color);
+}

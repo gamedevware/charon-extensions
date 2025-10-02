@@ -5,7 +5,7 @@ import { useControlDisabledStatus, useControlValue } from "./reactive";
 import { focusComponentInput } from "./focus.component.input.function";
 
 function LogicalToggle({ valueControl }: { valueControl: ValueControl<boolean> }) {
-    const [checked, setChecked] = useControlValue<boolean>(valueControl);
+    const [checked, setChecked] = useControlValue(valueControl);
     const [disabled] = useControlDisabledStatus(valueControl);
     const toggleRef = useRef<Toggle>(null);
 

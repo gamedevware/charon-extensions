@@ -58,7 +58,7 @@ export class ColorPickerEditorComponent implements CharonPropertyEditorElement, 
 
   public constructor(
     private readonly colorPickerService: ColorPickerService,
-    private readonly сhangeDetector: ChangeDetectorRef
+    private readonly changeDetector: ChangeDetectorRef
   ) {
     this._color = '';
     this.outputFormat = 'hex';
@@ -105,7 +105,7 @@ export class ColorPickerEditorComponent implements CharonPropertyEditorElement, 
       this._color = newColorValue;
     }
 
-    this.сhangeDetector.detectChanges();
+    this.changeDetector.detectChanges();
   }
 
   /**
@@ -140,7 +140,7 @@ export class ColorPickerEditorComponent implements CharonPropertyEditorElement, 
     // React to validation or disable/enable changes
     this._subscription.add(
       from(newValueControl.statusChanges)
-        .subscribe(_ => this.сhangeDetector.detectChanges())
+        .subscribe(_ => this.changeDetector.detectChanges())
     )
 
     // React to focus request
@@ -157,7 +157,7 @@ export class ColorPickerEditorComponent implements CharonPropertyEditorElement, 
     // Remove validator on `valueControl` change
     this._subscription.add(() => newValueControl.removeValidators(colorValidator));
 
-    this.сhangeDetector.detectChanges();
+    this.changeDetector.detectChanges();
   }
 
   /**

@@ -4,6 +4,14 @@ export interface DataDocument {
     'Id': DataDocumentId;
 }
 
+export interface DataDocumentMeta {
+    schemaId: string;
+    path: string | null;
+    containingDocumentSchemaId: string | null;
+    containingDocumentId: string | null;
+    errorCount: number;
+}
+
 export interface DataDocumentReference {
     'Id': DataDocumentId;
     'Icon'?: string;

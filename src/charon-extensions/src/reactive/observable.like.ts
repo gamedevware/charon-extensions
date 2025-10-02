@@ -13,5 +13,5 @@ export declare interface ObservableLike<T> extends SubscribableLike<T> {
      * @returns A subscribable object
      * @see https://github.com/tc39/proposal-observable#symbolobservable
      */
-    [Symbol.observable]?: () => SubscribableLike<T>;
+    [Symbol.observable]: () => SubscribableLike<T>;
 }

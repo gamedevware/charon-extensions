@@ -29,11 +29,13 @@ export declare interface SubscribableLike<T> {
      * // Clean up subscription
      * subscription.unsubscribe();
      */
-    subscribe(observer?: Partial<ObserverLike<T>>): {
-        /**
-         * Unsubscribes from the observable sequence
-         * Stops receiving notifications and cleans up resources
-         */
-        unsubscribe(): void;
-    };
+    subscribe(observer: Partial<ObserverLike<T>>): Unsubscribable;
+}
+
+export declare interface Unsubscribable {
+    /**
+     * Unsubscribes from the observable sequence
+     * Stops receiving notifications and cleans up resources
+     */
+    unsubscribe(): void;
 }

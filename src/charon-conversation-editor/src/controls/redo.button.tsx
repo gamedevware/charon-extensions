@@ -1,0 +1,16 @@
+import { useUndoRedo } from "../state";
+
+function RedoButton({ enabled }: { enabled: boolean }) {
+    const { redo, canRedo } = useUndoRedo();
+
+    return <>
+        <button type="button" disabled={!canRedo || !enabled} className="react-flow__controls-button ext-ce-redo-button" onClick={redo} title="Redo the last action">
+            <svg viewBox="-0.5 0 25 25" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" xmlns="http://www.w3.org/2000/svg">
+                <path d="M14 21.4199H9C7.14348 21.4199 5.36302 20.6824 4.05026 19.3696C2.73751 18.0569 2 16.2764 2 14.4199C2 12.5634 2.73751 10.783 4.05026 9.47021C5.36302 8.15746 7.14348 7.41992 9 7.41992H22" fill="none" />
+                <path d="M18 11.4199L22 7.41992L18 3.41992" fill="none" />
+            </svg>
+        </button>
+    </>
+}
+
+export default RedoButton;

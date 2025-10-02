@@ -21,7 +21,6 @@ export declare interface SpecificationDictionary {
     getMinRows(): number | null;
     getMaxRows(): number | null;
     getPickList(): ReadonlyArray<readonly [string, string, bigint]>;
-    getMultiPickList(): ReadonlyArray<readonly [string, string]>;
     mapPickList(value: any): bigint | null;
     mapMultiPickList(value: any): bigint | null;
     formatPickList(value: bigint | number): string;

@@ -1,0 +1,23 @@
+.ext-conversation-editor .ext-undo-redo-panel {
+    position: absolute;
+    bottom: 0;
+    left: 31px;
+
+    z-index: 5;
+    margin: 15px;
+
+    display: flex;
+    flex-direction: row;
+}
+
+
+.ext-conversation-editor .ext-ce-undo-button:disabled,
+.ext-conversation-editor .ext-ce-redo-button:disabled {
+    color: var(--app-color-disabled, gray);
+}
+
+
+.ext-conversation-editor .ext-ce-undo-button svg,
+.ext-conversation-editor .ext-ce-redo-button svg {
+    fill: unset;
+}

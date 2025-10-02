@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Conversation Editor - React Flow</title>
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <style>
+    :root {
+      --mdc-typography-font-family: 'Inter', sans-serif;
+
+      font-family: var(--mdc-typography-font-family);
+      line-height: 115%;
+      font-size: 15px;
+      letter-spacing: -0.5px;
+      font-weight: 500;
+
+      --app-color-text-default: black;
+
+      --app-color-primary: #0A5DFF;
+      --app-color-accent: #FF6838;
+      --app-color-warn: #FF6E6E;
+      --app-color-safe: forestgreen;
+
+      --app-color-light-gray: #EBEBEB;
+      --app-color-gray: #B2B2B2;
+      --app-color-disabled: #808080;
+      --app-color-dark-gray: #666666;
+
+      --app-light-gray-background: #F7F7F7;
+
+      --app-white-background: white;
+      --app-color-panel-background: white;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    .charon-asset-preview,
+    .charon-document-form-view {
+      background-color: var(--app-color-light-gray);
+      min-width: 100px;
+      min-height: 100px;
+    }
+
+    .charon-document-form-view {
+      flex: 1;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root" style="width: 100vw; height: 100vh; flex: 1; display: flex; flex-direction: column;"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
+</html>

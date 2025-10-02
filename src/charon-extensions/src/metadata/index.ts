@@ -6,3 +6,7 @@ export * from './requirement';
 export * from './schema.type';
 export * from './specification.dictionary';
 export * from './uniqueness';
+export * from './schema';
+export * from './schema.property';
+export * from './schema.reference';
+export * from './project.settings';

@@ -1,0 +1,64 @@
+{
+  "$schema": "https://raw.githubusercontent.com/gamedevware/charon-extensions/refs/heads/main/package.json.schema.json",
+  "name": "charon-conversation-editor",
+  "version": "0.0.14",
+  "description": "",
+  "keywords": [
+    "charon",
+    "extensions",
+    "conversation editor"
+  ],
+  "homepage": "https://github.com/gamedevware/charon-extensions",
+  "bugs": "https://github.com/gamedevware/charon-extensions/issues",
+  "author": "GameDevWare, Denis Zykov",
+  "license": "MIT",
+  "config": {
+    "customEditors": [
+      {
+        "id": "ext-conversation-editor",
+        "selector": "ext-conversation-editor",
+        "name": "Conversation Editor",
+        "type": [
+          "Schema"
+        ]
+      }
+    ]
+  },
+  "main": "index.js",
+  "files": [
+    "assets/index.css"
+  ],
+  "type": "module",
+  "scripts": {
+    "start": "vite",
+    "dev": "vite",
+    "build": "tsc -b && vite build && copy package.json dist\\package.json && cd dist && npm pack",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@xyflow/react": "^12.8.6",
+    "charon-extensions": "file:../charon-extensions",
+    "dagre": "^0.8.5",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-hotkeys-hook": "^5.2.1",
+    "rxjs": "^7.8.2",
+    "sass": "^1.86.3"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.21.0",
+    "@types/dagre": "^0.7.53",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
+    "@vitejs/plugin-react": "^4.3.4",
+    "eslint": "^9.21.0",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "eslint-plugin-react-refresh": "^0.4.19",
+    "globals": "^15.15.0",
+    "ts-essentials": "^10.1.1",
+    "typescript": "~5.7.2",
+    "typescript-eslint": "^8.24.1",
+    "vite": "^6.2.0"
+  }
+}
