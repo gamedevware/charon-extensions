@@ -6,59 +6,54 @@ import { ValueControl } from "./value.control";
  * Represents a collection control for document references
  * @extends ValueControl<DataDocumentReference[]>
  */
-export declare interface ReferenceCollectionControl extends ValueControl<DataDocumentReference[]> {
+export declare interface ReferenceCollectionControl<T extends DataDocumentReference = DataDocumentReference> extends ValueControl<T[]> {
     /** Type identifier for reference collection controls */
     readonly type: 'reference-collection';
 
-    /** Array of child controls for each reference in the collection */
-    readonly controls: readonly ValueControl<DataDocumentReference>[];
-
     /**
-     * Checks if the collection contains a document with the specified ID
-     * @param id - The document ID to check for
-     * @returns True if the collection contains the document ID
+     * Checks if the collection contains a reference with the specified ID
+     * @param id - The reference ID to check for
+     * @returns True if the collection contains the referenceID
      */
     containsId(id: DataDocumentId): boolean;
-    
+
     /**
-     * Appends a document reference to the end of the collection
-     * @param document - The document reference to append
-     * @param options - Options for emitting control events
-     * @returns The newly created control for the appended document
+     * Appends a reference to the end of the collection
+     * @param document - The reference to append
+     * @param opts - Options for emitting control events
      */
-    append(document: DataDocumentReference, options?: ControlEventEmitOptions): ValueControl;
-    
+    append(document: T, opts?: ControlEventEmitOptions): void;
+
     /**
-     * Inserts a document reference at the specified index
-     * @param index - The index at which to insert the document
-     * @param document - The document reference to insert
-     * @param options - Options for emitting control events
-     * @returns The newly created control for the inserted document
+     * Inserts a reference at the specified index
+     * @param index - The index at which to insert the reference
+     * @param reference - The reference to insert
+     * @param opts - Options for emitting control events
      */
-    insertAt(index: number, document: DataDocument, options?: ControlEventEmitOptions): ValueControl;
-    
+    insertAt(index: number, reference: T, opts?: ControlEventEmitOptions): void;
+
     /**
-     * Swaps the positions of two documents in the collection
-     * @param fromIndex - The index of the first document to swap
-     * @param toIndex - The index of the second document to swap
-     * @param options - Options for emitting control events
+     * Swaps the positions of two reference in the collection
+     * @param fromIndex - The index of the first reference to swap
+     * @param toIndex - The index of the second reference to swap
+     * @param opts - Options for emitting control events
      */
-    swap(fromIndex: number, toIndex: number, options?: ControlEventEmitOptions): void;
-    
+    swap(fromIndex: number, toIndex: number, opts?: ControlEventEmitOptions): void;
+
     /**
-     * Removes a document at the specified index
-     * @param index - The index of the document to remove
-     * @param options - Options for emitting control events
+     * Removes a reference at the specified index
+     * @param index - The index of the reference to remove
+     * @param opts - Options for emitting control events
      */
-    removeAt(index: number, options?: ControlEventEmitOptions): void;
-    
+    removeAt(index: number, opts?: ControlEventEmitOptions): void;
+
     /**
-     * Removes a specific document from the collection
-     * @param document - The document to remove
-     * @param options - Options for emitting control events
-     * @returns True if the document was found and removed
+     * Removes a specific reference from the collection
+     * @param reference - The reference to remove
+     * @param opts - Options for emitting control events
+     * @returns True if the reference was found and removed
      */
-    remove(document: DataDocument, options?: ControlEventEmitOptions): boolean;
+    remove(reference: T, opts?: ControlEventEmitOptions): boolean;
 }
 
 /**
@@ -66,6 +61,6 @@ export declare interface ReferenceCollectionControl extends ValueControl<DataDoc
  * @param value - The control to check
  * @returns True if the control is a ReferenceCollectionControl
  */
-export function isReferenceCollectionControl(value: ValueControl): value is ReferenceCollectionControl {
+export function isReferenceCollectionControl<T extends DataDocumentReference = DataDocumentReference>(value: ValueControl<any>): value is ReferenceCollectionControl<T> {
     return value && value.type === 'reference-collection';
 }

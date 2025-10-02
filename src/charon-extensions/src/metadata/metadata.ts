@@ -8,6 +8,7 @@ import { Uniqueness } from "./uniqueness";
 
 export declare interface Metadata {
     readonly projectSettings: ProjectSettings;
+    readonly schemas: readonly Schema[];
 
     getSchemas(): IterableIterator<Schema>;
     getSchema(schemaNameOrId: string): Schema;
@@ -68,7 +69,7 @@ export declare interface SchemaProperty {
     readonly specification: string;
 
     readonly metadata: Metadata;
-    readonly schema: Schema;
+    readonly schema: Schema | null;
 
     getReferencedSchema(): Schema;
     getSpecification(): SpecificationDictionary;

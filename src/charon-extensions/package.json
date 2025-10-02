@@ -17,7 +17,7 @@
   "author": "GameDevWare, Denis Zykov",
   "license": "MIT",
   "scripts": {
-    "build": "tsc",
+    "build": "node build.js && tsc --emitDeclarationOnly --outDir dist",
     "prepublish": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -27,6 +27,7 @@
     "dist/**/*"
   ],
   "devDependencies": {
+    "esbuild": "^0.25.10",
     "typescript": "^5.8.3"
   }
 }

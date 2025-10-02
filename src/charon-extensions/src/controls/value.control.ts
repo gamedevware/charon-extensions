@@ -23,6 +23,8 @@ export type OnFocusHandler = (valueControl: ValueControl, focused: boolean) => v
  */
 export type DoExpandHandler = (expand: boolean) => Promise<void>;
 
+export type ValueControlStatus = 'VALID' | 'INVALID' | 'PENDING' | 'DISABLED';
+
 /**
  * Represents a form control that tracks value, validation, and state changes
  * @template TValue - The type of value this control holds
@@ -56,7 +58,7 @@ export declare interface ValueControl<TValue = any> {
     readonly root: ValueControl | null;
 
     /** Current validation status of the control */
-    readonly status: 'VALID' | 'INVALID' | 'PENDING' | 'DISABLED';
+    readonly status: ValueControlStatus;
 
     /** True if the control is valid */
     readonly valid: boolean;
@@ -92,7 +94,7 @@ export declare interface ValueControl<TValue = any> {
     readonly valueChanges: ObservableLike<TValue>;
 
     /** Observable that emits when the control's status changes */
-    readonly statusChanges: ObservableLike<string>;
+    readonly statusChanges: ObservableLike<ValueControlStatus>;
 
     /** Current value of the control */
     readonly value: TValue;
@@ -231,6 +233,11 @@ export declare interface ValueControl<TValue = any> {
      */
     markAsPending(opts?: ControlEventEmitOptions): void;
 
+    makeWriteable(opts?: ControlEventEmitOptions): void;
+    makeAllWriteable(opts?: ControlEventEmitOptions): void;
+    makeReadOnly(opts?: ControlEventEmitOptions): void;
+    makeAllReadOnly(opts?: ControlEventEmitOptions): void;
+
     /**
      * Disables the control
      * @param opts - Options for emitting control events
@@ -304,6 +311,8 @@ export declare interface ValueControl<TValue = any> {
      * @returns True if the error exists
      */
     hasError(errorCode: string, path?: Array<string | number> | string): boolean;
+
+    waitForValidationCompletion(): Promise<ValueControlStatus>;
 }
 
 /**

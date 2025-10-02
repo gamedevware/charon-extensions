@@ -7,7 +7,7 @@ export interface DataDocument {
 export interface DataDocumentReference {
     'Id': DataDocumentId;
     'Icon'?: string;
-    'DisplayName'?: DataDocumentValue;
+    'DisplayName': string;
 }
 
 export type IetfLanguageTag = string;
