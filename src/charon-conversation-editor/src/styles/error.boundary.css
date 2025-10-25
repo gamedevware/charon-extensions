@@ -1,0 +1,18 @@
+.ext-conversation-editor .ext-ce-error-container {
+    padding: 2rem;
+    color: #fff;
+    background: #1a1a1a;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.ext-conversation-editor .ext-ce-error-container h1 {
+    color: var(--app-color-warn, red);
+}
+
+.ext-conversation-editor .ext-ce-error-container pre {
+    background: #333;
+    padding: 1rem;
+    border-radius: 8px;
+    overflow: auto
+}

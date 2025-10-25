@@ -2,7 +2,8 @@ import '@xyflow/react/dist/style.css';
 import './styles/conversation.editor.css';
 import './styles/control.buttons.css';
 import './styles/dialog.tree.node.css';
-import './styles/property.drawer.css'
+import './styles/property.drawer.css';
+import './styles/error.boundary.css';
 
 import { useContext, useState } from 'react';
 import { ReactFlow, MiniMap, Controls, Background, BackgroundVariant } from '@xyflow/react';

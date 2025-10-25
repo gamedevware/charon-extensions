@@ -7,6 +7,7 @@ import { ConversationContext } from "./state/conversation.context";
 import { ConversationState } from "./state";
 import { UndoRedoContext } from "./state/undo.redo.context";
 import { UndoRedoState } from "./state/undo.redo.state";
+import { ErrorBoundary } from "./error.boundary";
 
 /**
  * Custom HTML Element for editing conversation trees in a visual flow editor
@@ -70,13 +71,15 @@ export default class ConversationEditorElement extends HTMLElement implements Ch
 
     if (this._documentControl) {
       this._root.render(
-        <ReactFlowProvider>
-          <ConversationContext value={new ConversationState(this._documentControl)}>
-            <UndoRedoContext value={new UndoRedoState(this._documentControl)}>
-              <ConversationEditor />
-            </UndoRedoContext>
-          </ConversationContext>
-        </ReactFlowProvider>);
+        <ErrorBoundary>
+          <ReactFlowProvider>
+            <ConversationContext value={new ConversationState(this._documentControl)}>
+              <UndoRedoContext value={new UndoRedoState(this._documentControl)}>
+                <ConversationEditor />
+              </UndoRedoContext>
+            </ConversationContext>
+          </ReactFlowProvider>
+        </ErrorBoundary>);
     }
   }
 
