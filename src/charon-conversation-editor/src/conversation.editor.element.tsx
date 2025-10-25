@@ -8,6 +8,8 @@ import { ConversationState } from "./state";
 import { UndoRedoContext } from "./state/undo.redo.context";
 import { UndoRedoState } from "./state/undo.redo.state";
 import { ErrorBoundary } from "./error.boundary";
+import { validateSchema } from "./schema.validation";
+import SchemaValidationResult from "./schema.validation/schema.validation.result";
 
 /**
  * Custom HTML Element for editing conversation trees in a visual flow editor
@@ -70,12 +72,14 @@ export default class ConversationEditorElement extends HTMLElement implements Ch
     this._root ??= createRoot(this);
 
     if (this._documentControl) {
+      const isValidSchema = !validateSchema(this._documentControl.schema).length;
+
       this._root.render(
         <ErrorBoundary>
           <ReactFlowProvider>
             <ConversationContext value={new ConversationState(this._documentControl)}>
               <UndoRedoContext value={new UndoRedoState(this._documentControl)}>
-                <ConversationEditor />
+                {isValidSchema ? <ConversationEditor /> : <SchemaValidationResult documentControl={this._documentControl} />}
               </UndoRedoContext>
             </ConversationContext>
           </ReactFlowProvider>

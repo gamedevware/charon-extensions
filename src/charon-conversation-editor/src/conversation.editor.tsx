@@ -4,6 +4,7 @@ import './styles/control.buttons.css';
 import './styles/dialog.tree.node.css';
 import './styles/property.drawer.css';
 import './styles/error.boundary.css';
+import './styles/schema.validation.css';
 
 import { useContext, useState } from 'react';
 import { ReactFlow, MiniMap, Controls, Background, BackgroundVariant } from '@xyflow/react';
