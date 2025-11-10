@@ -17,7 +17,7 @@ function PropertyDrawer({ documentControl }: { documentControl: DocumentControl<
     const canBeDeleted = Boolean(documentControl?.parent);
 
     return <>
-        <div className="ext-ce-property-drawer" ref={containerRef}>
+        <div className="ext-ce-property-drawer mat-elevation-z1" ref={containerRef}>
             <PropertyDrawerResizeBar containerRef={containerRef} />
 
             {documentControl && (

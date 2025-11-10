@@ -1,6 +1,5 @@
 import { ObservableLike } from "charon-extensions";
 import { useState, useEffect, useRef } from "react";
-import { from, ObservableInput } from "rxjs";
 
 /**
  * Custom hook to subscribe to an Observable and track its state
@@ -21,7 +20,7 @@ import { from, ObservableInput } from "rxjs";
  * return <div>Data: {data}</div>;
  */
 export function useObservable<T = any>(
-    observable: ObservableLike<T> | ObservableInput<T>
+    observable: ObservableLike<T>
 ): [value: T | undefined, error: Error | undefined, completed: boolean] {
 
     const controlRef = useRef(observable);
@@ -37,11 +36,11 @@ export function useObservable<T = any>(
         }
         controlRef.current = observable;
 
-        const subscription = from(observable).subscribe({
-            next: function onObservableNext(value) {
+        const subscription = observable.subscribe({
+            next: function onObservableNext(value: T) {
                 setValue(value);
             },
-            error: function onObservableError(error) {
+            error: function onObservableError(error: Error) {
                 setError(error);
                 setCompleted(true);
             },

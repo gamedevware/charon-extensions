@@ -5,11 +5,9 @@
     position: relative;
 
     --ext-panel-background-color: var(--app-white-background, white);
-
-    --ext-node-edge-color: var(--app-color-light-gray, lightgray);
-    --ext-node-border-color: var(--app-color-light-gray, lightgray);
-    --ext-node-hover-color: var(--app-color-gray, gray);
-    --ext-node-select-color: var(--app-color-primary, blue);
+    --ext-node-edge-color: hsl(from var(--app-color-gray, gray) h s calc(l * 1.2));
+    --ext-node-border-color: hsl(from var(--app-color-gray, gray) h s calc(l * 1.2));
+    --ext-node-hover-color: hsl(from var(--app-color-gray, gray) h s calc(l * 0.8));
 
     --xy-minimap-background-color-default: #fff;
     --xy-minimap-mask-background-color-default: rgba(240, 240, 240, .6);
@@ -23,6 +21,8 @@
 .ext-conversation-editor .ext-ce-flow-graph {
     flex: 1;
     position: relative;
+    border-radius: 4px;
+    margin-bottom: 4px;
 }
 
 .ext-conversation-editor .react-flow__node {

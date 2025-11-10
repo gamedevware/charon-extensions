@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/gamedevware/charon-extensions/refs/heads/main/package.json.schema.json",
   "name": "charon-conversation-editor",
-  "version": "0.0.16",
+  "version": "0.0.19",
   "description": "",
   "keywords": [
     "charon",

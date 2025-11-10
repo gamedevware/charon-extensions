@@ -48,7 +48,7 @@ function ConversationEditor() {
 
   return (
     <>
-      <div className='ext-ce-flow-graph'
+      <div className='ext-ce-flow-graph mat-elevation-z1'
         onFocus={focusHandler}
         tabIndex={0}
       >
