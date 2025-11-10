@@ -25,6 +25,7 @@ export interface RootDocumentControlServices {
     readonly aiChatService: {
         startThread(systemPrompt: string): ObservableLike<AiChatThread>;
     };
+    readonly serverApiClient: any;
 }
 
 export enum FilterOperator {

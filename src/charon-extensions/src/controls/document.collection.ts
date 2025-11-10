@@ -3,6 +3,8 @@ import { DataDocument } from "./data.document";
 import { DocumentControl } from "./document.control";
 import { ValueControl } from "./value.control";
 
+interface ControlRemoveEventEmitOptions extends ControlEventEmitOptions { destroyRemovedControl?: boolean };
+
 /**
  * Represents a collection control for full documents
  * @extends ValueControl<DataDocument[]>
@@ -44,7 +46,7 @@ export declare interface DocumentCollectionControl<T extends DataDocument = Data
      * @param index - The index of the document to remove
      * @param opts - Options for emitting control events
      */
-    removeAt(index: number, opts?: ControlEventEmitOptions): void;
+    removeAt(index: number, opts?: ControlRemoveEventEmitOptions): void;
 
     /**
      * Removes a specific document from the collection
@@ -52,7 +54,7 @@ export declare interface DocumentCollectionControl<T extends DataDocument = Data
      * @param opts - Options for emitting control events
      * @returns True if the document was found and removed
      */
-    remove(document: T, opts?: ControlEventEmitOptions): boolean;
+    remove(document: T, opts?: ControlRemoveEventEmitOptions): boolean;
 }
 
 /**
