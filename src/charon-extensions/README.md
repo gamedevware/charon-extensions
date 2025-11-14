@@ -4,4 +4,10 @@ This package contains TypeScript types and interfaces used by Charon UI extensio
 
 📦 **Note:** This folder is for reference only.  
 Use the official NPM package instead:  
-👉 https://www.npmjs.com/package/charon-extensions
+https://www.npmjs.com/package/charon-extensions
+
+## 🛠️ Installation
+
+```bash
+npm install charon-extensions@latest -S
+```

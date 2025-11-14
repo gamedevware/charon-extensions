@@ -9,36 +9,44 @@ This repository includes both **React** and **Angular** implementations of custo
 
 ```
 /src
-├── charon-extensions/           # 🛠️ Base types and utilities for building extensions
-├── charon-logical-toggle/       # ⚛️ React-based Logical Toggle field editor
-└── charon-color-picker/         # 🅰️ Angular-based Color Picker (HEX) editor
+├── charon-extensions/           # Base types and utilities for building extensions
+├── charon-conversation-editor/  # React-based Conversation document editor
+├── charon-logical-toggle/       # React-based Logical Toggle field editor
+└── charon-color-picker/         # Angular-based Color Picker (HEX) editor
 ```
 
 ---
 
 ## 🧩 Available Examples
 
-### 🔘 Logical Toggle (React)
+### Logical Toggle (React)
 
 A toggle button field editor for Boolean values (`Logical` type), written in **React** and compiled as a Web Component.
 
-📁 [View Source Code](https://github.com/gamedevware/charon-extensions/tree/main/src/charon-logical-toggle)
+ [View Source Code](https://github.com/gamedevware/charon-extensions/tree/main/src/charon-logical-toggle)
 
-### 🎨 Color Picker (Angular)
+### Conversation Editor (React)
+
+A conversation editor for `ConversationTree` schema, written in **React** and compiled as a Web Component.
+
+ [View Source Code](https://github.com/gamedevware/charon-extensions/tree/main/src/charon-conversation-editor)
+
+
+### Color Picker (Angular)
 
 A color input component supporting HEX and RGBA values, written in **Angular**, registered as a custom field editor for the `Text` data type.
 
-📁 [View Source Code](https://github.com/gamedevware/charon-extensions/tree/main/src/charon-color-picker)
+ [View Source Code](https://github.com/gamedevware/charon-extensions/tree/main/src/charon-color-picker)
 
-### 🔧 Extension Base Types
+### Extension Base Types
 
 Shared TypeScript interfaces and helper definitions for implementing Charon-compatible extensions.
 
-📁 [View Source Code](https://github.com/gamedevware/charon-extensions/tree/main/src/charon-extensions)
+ [View Source Code](https://github.com/gamedevware/charon-extensions/tree/main/src/charon-extensions)
 
 ---
 
-## 📤 Building and Publishing
+## 🛠️ Building and Publishing
 
 To build and publish an extension as an NPM package:
 
@@ -72,7 +80,7 @@ Project Settings → Extensions
 
 ---
 
-## 🧑‍💻 Contributing
+## Contributing
 
 Feel free to fork this repository or open pull requests with improvements, new example editors, or bug fixes.
 

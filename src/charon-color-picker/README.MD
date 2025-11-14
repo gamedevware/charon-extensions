@@ -27,4 +27,4 @@ This generates a `.tgz` file that can be imported into Charon for testing.
 ## 📘 Full Guide
 
 See step-by-step instructions here:  
-👉 [Creating Angular-based UI Extension](https://gamedevware.github.io/charon/advanced/extensions/creating_angular_extension.html)
+[Creating Angular-based UI Extension](https://gamedevware.github.io/charon/advanced/extensions/creating_angular_extension.html)
