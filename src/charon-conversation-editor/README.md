@@ -60,14 +60,13 @@ The Web Component acts as a bridge, implementing the `CharonSchemaEditorElement`
 **Purpose**: The Web Component wrapper that interfaces with Charon.
 - Implements `CharonSchemaEditorElement` interface
 - Manages subscriptions to `documentControl` from Charon
-- Handles data serialization/deserialization
 - **Customize**: Modify how data is passed between Charon and React, add validation logic
 
 #### `src/dev/
-**Purpose**: A folder containing a set of mocks simulating the extension's harness during development
+A folder containing a set of mocks simulating the extension's harness during development  
 
 #### `src/reactive/
-**Purpose**: A folder containing a set of **React** state system adapters for **Rx.js**
+A folder containing a set of **React** state system adapters for **Rx.js**  
 
 #### `package.json`
 **Purpose**: Defines the extension metadata and Charon integration.
@@ -100,10 +99,9 @@ The Web Component acts as a bridge, implementing the `CharonSchemaEditorElement`
 - **Customize**: Modify editor layout, add toolbar buttons, change default behaviors
 
 #### `src/components/nodes/`
-**Purpose**: Custom node components for different dialog types.
-- `DialogueNode.tsx`: Standard conversation line
-- `ChoiceNode.tsx`: Branching decision points  
-- `ConditionNode.tsx`: Logic gates for conditional flow
+**Purpose**: Custom node components for different dialog node types.
+- `dialog.tree.node.tsx`: Standard conversation node
+- `root.node.tsx`: Conversation start node (start marker)
 - **Customize**: Create new node types, modify appearance, add custom fields
 
 #### `src/components/property.drawer/property.drawer.tsx`
@@ -183,36 +181,6 @@ Edges connect nodes:
   label?: string           // Optional label on connection
 }
 ```
-
-### Visual Layout Strategy
-
-The editor uses React Flow's built-in layout features:
-- **Dagre Layout**: Hierarchical tree layout for conversation flow
-- **Auto-layout**: Automatically arranges nodes to avoid overlaps
-- **Manual Layout**: Users can drag nodes to customize positioning
-
-## Main Components Explained
-
-### `ConversationEditorElement` (Web Component Wrapper)
-**Responsibility**: Bridge between Charon and React
-- Receives updates from Charon when data changes
-- Sends updates to Charon when user edits conversation
-- Manages component lifecycle (mount/unmount)
-- Prevents memory leaks by properly unsubscribing from Charon observables
-
-### ConversationEditor` (Main UI)
-**Responsibility**: Orchestrate the entire editor experience
-- Renders the React Flow canvas
-- Manages toolbar and sidebar
-- Handles global editor state (zoom level, selected nodes)
-- Coordinates between different UI components
-
-### Custom Node Components
-**Responsibility**: Render individual conversation elements
-- Display node-specific data (text, character name, etc.)
-- Provide handles for connecting nodes
-- Show node-specific controls (delete, edit)
-- Style based on node type and state (selected, error, etc.)
 
 ## Getting Started
 
