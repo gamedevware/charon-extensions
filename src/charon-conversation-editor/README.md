@@ -2,6 +2,8 @@
 
 A visual node-based conversation/dialog editor extension for [Charon](https://gamedevware.com/) game data editor, built with React and React Flow.
 
+<img width="1065" alt="dashboard" src="./screenshot.png"/>  
+
 ## Overview
 
 This extension demonstrates how to create a custom document editor for Charon using Web Components and React. 
