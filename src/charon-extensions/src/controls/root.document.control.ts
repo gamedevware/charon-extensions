@@ -1,7 +1,7 @@
 import { Schema, SchemaProperty } from "../metadata";
 import { DataDocument } from "./data.document";
 import type { DocumentControl } from "./document.control";
-import { RootDocumentControlServices } from "./root.document.services.services";
+import { RootDocumentControlServices } from "./root.document.services";
 import { ValueControl } from "./value.control";
 
 /**
