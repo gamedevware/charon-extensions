@@ -236,6 +236,7 @@ This generates a `.tgz` file that can be installed in Charon.
 - [Creating Charon Extensions Guide](https://gamedevware.github.io/charon/advanced/extensions/creating_react_extension.html)
 - [React Flow Documentation](https://reactflow.dev/)
 - [Web Components Specification](https://developer.mozilla.org/en-US/docs/Web/Web_Components)
+- [Conversation Tree Schema for Import into Charon](conversation_schemas_to_import.json)
 
 ## License
 

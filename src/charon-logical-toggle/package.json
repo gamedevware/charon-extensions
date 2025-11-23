@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/gamedevware/charon-extensions/refs/heads/main/package.json.schema.json",
   "name": "charon-logical-toggle",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "",
   "keywords": [
     "charon",
@@ -40,7 +40,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "charon-extensions": "file:../charon-extensions",
+    "charon-extensions": "2.314.388",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-toggle": "^4.1.3",

@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "@xyflow/react": "^12.8.6",
-    "charon-extensions": "file:../charon-extensions",
+    "charon-extensions": "2.314.388",
     "dagre": "^0.8.5",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
