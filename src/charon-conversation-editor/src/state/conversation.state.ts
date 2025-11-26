@@ -3,20 +3,16 @@ import { DialogResponse, generateDialogNodeIdPlaceholder, generateDialogNodeResp
 import { NodeChange, Position, NodeAddChange, EdgeAddChange, EdgeChange, XYPosition } from "@xyflow/react";
 import type { DialogFlowEdge, DialogFlowNode } from "../nodes/node.types";
 import { createDialogHandleId, createDialogFlowNodeId, createDialogResponseHandleId, createRootNodeHandleId, createRootFlowNodeId, parseHandleOrFlowNodeId } from "../nodes";
-import { formatDocumentDisplayText, getDocumentIdAsString } from "../nodes/document.control.functions";
+import { formatDocumentDisplayText } from "../nodes/document.control.functions";
 import { arePositionsEquals, clampPosition, getPosition, setPosition } from "./x.y.position";
 import { bindInstanceMethods } from "./bind.instance.methods.function";
 
 const noChanges: readonly EdgeChange<DialogFlowEdge>[] = [];
 
 export class ConversationState {
-    private readonly originalIdToControlMap: Map<string, WeakRef<DocumentControl>>;
-
     constructor(
         public readonly conversationTreeControl: RootDocumentControl<ConversationTree>
     ) {
-        this.originalIdToControlMap = new Map();
-
         bindInstanceMethods(this);
     }
 
@@ -35,8 +31,9 @@ export class ConversationState {
             const specification = new URLSearchParams(String(Specification || ''));
             const position = getPosition(specification);
 
-            nodesById.delete(dialogFlowNodeId); // prevent deletion of this node
             if (existingNode && Object.is(existingNode.data.valueControl, dialogNodeControl)) {
+                nodesById.delete(existingNode.id); // prevent deletion of this node
+
                 if (position && !arePositionsEquals(position, existingNode.position)) {
                     changes.push({
                         id: existingNode.id,
@@ -71,8 +68,9 @@ export class ConversationState {
         const existingRootNode = nodesById.get(rootFlowNodeId);
         const rootNodeSpecification = new URLSearchParams(String(this.conversationTreeControl.controls.Specification?.value || ''));
         const rootPosition = getPosition(rootNodeSpecification);
-        nodesById.delete(rootFlowNodeId); // prevent deletion of this node
         if (existingRootNode && Object.is(existingRootNode.data.valueControl, this.conversationTreeControl)) {
+            nodesById.delete(existingRootNode.id); // prevent deletion of this node
+
             if (rootPosition && !arePositionsEquals(rootPosition, existingRootNode.position)) {
                 changes.push({
                     id: existingRootNode.id,
@@ -188,7 +186,7 @@ export class ConversationState {
         const newDialogNodeId = generateDialogNodeIdPlaceholder();
         const specification = setPosition('', position);
 
-        const newDialogNodeControl = nodesControl.append({
+        nodesControl.append({
             Id: newDialogNodeId,
             Text: '<EMPTY>',
             NextNode: null,
@@ -196,9 +194,6 @@ export class ConversationState {
             Specification: specification.toString(),
 
         }, opts);
-
-        // save it for actualizeId function
-        this.originalIdToControlMap.set(newDialogNodeId, new WeakRef(newDialogNodeControl));
 
         const { id: sourceDialogNodeId } = parseHandleOrFlowNodeId(source);
         const { id: sourceDialogNodeOrResponseId, type: handleType } = parseHandleOrFlowNodeId(sourceHandleId);
@@ -214,7 +209,8 @@ export class ConversationState {
         const nodesControl = this.conversationTreeControl.controls.Nodes;
         const specification = setPosition(initialData?.Specification ?? '', position);
         const newDialogNodeId = initialData.Id || generateDialogNodeIdPlaceholder();
-        const newDialogNodeControl = nodesControl.append({
+       
+        nodesControl.append({
             ...initialData,
 
             Id: newDialogNodeId,
@@ -225,10 +221,6 @@ export class ConversationState {
 
         }, opts);
 
-        // save it for actualizeId function
-        if (typeof newDialogNodeId === 'string' && newDialogNodeId.startsWith('_ID_')) {
-            this.originalIdToControlMap.set(newDialogNodeId, new WeakRef(newDialogNodeControl));
-        }
 
         function mapResponse(responseData: Partial<DialogResponse>): DialogResponse {
 
@@ -243,40 +235,40 @@ export class ConversationState {
         }
     }
 
-    public setDialogNextNode(dialogNodeId: string, targetDialogNodeId: string | null, comparisonTargetDialogNodeId?: string | null, opts?: ControlEventEmitOptions) {
+    public setDialogNextNode(dialogNodeId: string, targetDialogNodeId: string | null, changeTargetFromId?: string | null, opts?: ControlEventEmitOptions) {
         const dialogNodeControl = this.findDialogNode(dialogNodeId);
         if (!dialogNodeControl) {
             return;
         }
 
         const nextNodeControl = dialogNodeControl.controls.NextNode;
-        if (comparisonTargetDialogNodeId !== undefined && nextNodeControl.value?.Id != comparisonTargetDialogNodeId) {
-            return; // unexpected original value
+        if (changeTargetFromId !== undefined && nextNodeControl.value?.Id != changeTargetFromId) {
+            return; // from Id is not maching
         }
 
         const nextNodeReference = this.getNextNodeReference(targetDialogNodeId);
         nextNodeControl.setValue(nextNodeReference, opts);
     }
 
-    public setDialogResponseNextNode(dialogNodeId: string, dialogResponseId: string, targetDialogNodeId: string | null, comparisonTargetDialogNodeId?: string | null, opts?: ControlEventEmitOptions) {
+    public setDialogResponseNextNode(dialogNodeId: string, dialogResponseId: string, targetDialogNodeId: string | null, changeTargetFromId?: string | null, opts?: ControlEventEmitOptions) {
         const dialogResponseControl = this.findDialogResponse(dialogNodeId, dialogResponseId);
         if (!dialogResponseControl) {
             return;
         }
 
         const nextNodeControl = dialogResponseControl.controls.NextNode;
-        if (comparisonTargetDialogNodeId !== undefined && nextNodeControl.value?.Id != comparisonTargetDialogNodeId) {
-            return; // unexpected original value
+        if (changeTargetFromId !== undefined && nextNodeControl.value?.Id != changeTargetFromId) {
+            return; // from Id is not maching
         }
         const nextNodeReference = this.getNextNodeReference(targetDialogNodeId);
         nextNodeControl.setValue(nextNodeReference, opts);
     }
 
-    public setRootNode(targetDialogNodeId: string | null, comparisonTargetDialogNodeId?: string | null, opts?: ControlEventEmitOptions) {
+    public setRootNode(targetDialogNodeId: string | null, changeTargetFromId?: string | null, opts?: ControlEventEmitOptions) {
 
         const rootNodeControl = this.conversationTreeControl.controls.RootNode;
-        if (comparisonTargetDialogNodeId !== undefined && rootNodeControl.value?.Id != comparisonTargetDialogNodeId) {
-            return; // unexpected original value
+        if (changeTargetFromId !== undefined && rootNodeControl.value?.Id != changeTargetFromId) {
+            return; // from Id is not maching
         }
 
         const nextNodeReference = this.getNextNodeReference(targetDialogNodeId);
@@ -324,20 +316,16 @@ export class ConversationState {
 
         const newDialogResponseId = generateDialogNodeResponseIdPlaceholder();
         const responsesControl = dialogNodeControl.controls.Responses;
-        const newDialogResponseControl = responsesControl.append({
+        
+        responsesControl.append({
             Id: newDialogResponseId,
             Text: text,
             NextNode: null,
             Specification: ''
         }, opts);
-
-        // save it for actualizeId function
-        this.originalIdToControlMap.set(newDialogResponseId, new WeakRef(newDialogResponseControl));
     }
 
     public removeDialogResponse(dialogNodeId: string, dialogResponseId: string, opts?: ControlEventEmitOptions) {
-        dialogResponseId = this.actualizeId(dialogResponseId);
-
         const dialogNodeControl = this.findDialogNode(dialogNodeId);
         if (!dialogNodeControl) {
             return;
@@ -352,8 +340,6 @@ export class ConversationState {
     }
 
     public removeDialogNode(dialogNodeId: string, opts?: ControlEventEmitOptions) {
-        dialogNodeId = this.actualizeId(dialogNodeId);
-
         const nodesControl = this.conversationTreeControl.controls.Nodes;
         const dialogNodeIndex = nodesControl.value.findIndex(node => node.Id == dialogNodeId);
         if (dialogNodeIndex < 0) {
@@ -393,8 +379,6 @@ export class ConversationState {
     }
 
     public findDialogNode(dialogNodeId: string | null | undefined) {
-        dialogNodeId = this.actualizeId(dialogNodeId);
-
         if (!dialogNodeId) {
             return;
         }
@@ -408,9 +392,6 @@ export class ConversationState {
     }
 
     public findDialogResponse(dialogNodeId: string | null | undefined, dialogResponseId: string | null | undefined) {
-        dialogNodeId = this.actualizeId(dialogNodeId);
-        dialogResponseId = this.actualizeId(dialogResponseId);
-
         if (!dialogNodeId || !dialogResponseId) {
             return;
         }
@@ -428,22 +409,6 @@ export class ConversationState {
         }
     }
 
-
-    // original Id of DialogNode/DialogResponse could be edited, but original ones could be left in DOM and used with any methods above, 
-    // so we keep map of "original id -> document" to miltigate this issue
-    private actualizeId(dialogNodeOrResponseId: string): string;
-    private actualizeId(dialogNodeOrResponseId: string | undefined | null): string | undefined | null;
-    private actualizeId(dialogNodeOrResponseId: string | undefined | null): string | undefined | null {
-        if (!dialogNodeOrResponseId) {
-            return null;
-        }
-        const control = this.originalIdToControlMap.get(dialogNodeOrResponseId)?.deref();
-        if (control) {
-            return getDocumentIdAsString(control); // since findDialogNode/findDialogResponse use loose Id comparison, conversion to string won't break anything
-        }
-
-        return dialogNodeOrResponseId;
-    }
 
     private getEdgeChange(
         edges: Map<string, DialogFlowEdge>,

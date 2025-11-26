@@ -4,6 +4,7 @@
     flex-direction: row;
     position: relative;
 
+    --ext-node-select-color: var(--app-color-primary, blue);
     --ext-panel-background-color: var(--app-white-background, white);
     --ext-node-edge-color: hsl(from var(--app-color-gray, gray) h s calc(l * 1.2));
     --ext-node-border-color: hsl(from var(--app-color-gray, gray) h s calc(l * 1.2));
