@@ -8,7 +8,7 @@ import { ValueControl } from "./value.control";
  * Represents a control for a single document (non-root)
  * @extends ValueControl<DataDocument>
  */
-export declare interface DocumentControl<T extends DataDocument = DataDocument> extends ValueControl<T> {
+export declare interface DocumentControl<DocumentT extends DataDocument = DataDocument> extends ValueControl<DocumentT> {
     /** Schema of document */
     readonly schema: Schema;
 
@@ -16,7 +16,7 @@ export declare interface DocumentControl<T extends DataDocument = DataDocument> 
     readonly type: 'document';
 
     /** Child controls indexed by property name */
-    readonly controls: DocumentControls<T>;
+    readonly controls: DocumentControls<DocumentT>;
 }
 
 /**
@@ -24,8 +24,8 @@ export declare interface DocumentControl<T extends DataDocument = DataDocument> 
  * @param value - The control to check
  * @returns True if the control is a DocumentControl
  */
-export function isDocumentControl<T extends DataDocument = DataDocument>(value: ValueControl): value is DocumentControl<T> {
-    return value && value.type === 'document';
+export function isDocumentControl<DocumentT extends DataDocument = DataDocument>(value: ValueControl  | null | undefined): value is DocumentControl<DocumentT> {
+    return !!value && value.type === 'document';
 }
 
 type ArrayItemType<T> = T extends (infer U)[] ? U : never;

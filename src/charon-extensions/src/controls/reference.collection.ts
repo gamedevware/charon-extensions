@@ -6,7 +6,7 @@ import { ValueControl } from "./value.control";
  * Represents a collection control for document references
  * @extends ValueControl<DataDocumentReference[]>
  */
-export declare interface ReferenceCollectionControl<T extends DataDocumentReference = DataDocumentReference> extends ValueControl<T[]> {
+export declare interface ReferenceCollectionControl<ReferenceT extends DataDocumentReference = DataDocumentReference> extends ValueControl<ReferenceT[]> {
     /** Type identifier for reference collection controls */
     readonly type: 'reference-collection';
 
@@ -22,7 +22,7 @@ export declare interface ReferenceCollectionControl<T extends DataDocumentRefere
      * @param document - The reference to append
      * @param opts - Options for emitting control events
      */
-    append(document: T, opts?: ControlEventEmitOptions): void;
+    append(document: ReferenceT, opts?: ControlEventEmitOptions): void;
 
     /**
      * Inserts a reference at the specified index
@@ -30,7 +30,7 @@ export declare interface ReferenceCollectionControl<T extends DataDocumentRefere
      * @param reference - The reference to insert
      * @param opts - Options for emitting control events
      */
-    insertAt(index: number, reference: T, opts?: ControlEventEmitOptions): void;
+    insertAt(index: number, reference: ReferenceT, opts?: ControlEventEmitOptions): void;
 
     /**
      * Swaps the positions of two reference in the collection
@@ -53,7 +53,7 @@ export declare interface ReferenceCollectionControl<T extends DataDocumentRefere
      * @param opts - Options for emitting control events
      * @returns True if the reference was found and removed
      */
-    remove(reference: T, opts?: ControlEventEmitOptions): boolean;
+    remove(reference: ReferenceT, opts?: ControlEventEmitOptions): boolean;
 }
 
 /**
@@ -61,6 +61,6 @@ export declare interface ReferenceCollectionControl<T extends DataDocumentRefere
  * @param value - The control to check
  * @returns True if the control is a ReferenceCollectionControl
  */
-export function isReferenceCollectionControl<T extends DataDocumentReference = DataDocumentReference>(value: ValueControl<any>): value is ReferenceCollectionControl<T> {
-    return value && value.type === 'reference-collection';
+export function isReferenceCollectionControl<T extends DataDocumentReference = DataDocumentReference>(value: ValueControl<any> | null | undefined): value is ReferenceCollectionControl<T> {
+    return !!value && value.type === 'reference-collection';
 }
