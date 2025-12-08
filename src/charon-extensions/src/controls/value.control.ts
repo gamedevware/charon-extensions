@@ -332,3 +332,17 @@ export declare interface AsyncValueValidatorFn {
 export declare interface ValueValidatorFn {
     (control: ValueControl): Object | null;
 }
+
+/**
+ * Type guard to check if a object is a ValueControl
+ * @param value - The object to check
+ * @returns True if the object is a ValueControl
+ */
+export function isValueControl<T = any>(value: any): value is ValueControl<T> {
+    return !!value &&
+        typeof value === 'object' &&  // probe few properties and functions
+        typeof value.type === 'string' &&
+        typeof value.changeStatus === 'string' &&
+        typeof value.setValue === 'function' &&
+        typeof value.makeWriteable === 'function';
+}
