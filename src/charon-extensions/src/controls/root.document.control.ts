@@ -2,13 +2,13 @@ import { Schema, SchemaProperty } from "../metadata";
 import { DataDocument } from "./data.document";
 import type { DocumentControl } from "./document.control";
 import { RootDocumentControlServices } from "./root.document.services";
-import { ValueControl } from "./value.control";
+import { isValueControl, ValueControl } from "./value.control";
 
 /**
  * Represents the root document control in a form hierarchy
  * @extends DocumentControl
  */
-export declare interface RootDocumentControl<T extends DataDocument = DataDocument> extends DocumentControl<T> {
+export declare interface RootDocumentControl<DocumentT extends DataDocument = DataDocument> extends DocumentControl<DocumentT> {
     /** The complete JSON schema for this document */
     readonly schema: Schema;
 
@@ -24,9 +24,25 @@ export declare interface RootDocumentControl<T extends DataDocument = DataDocume
  * @param value - The control to check
  * @returns True if the control is a RootDocumentControl
  */
-export function isRootDocumentControl<T extends DataDocument = DataDocument>(value: ValueControl): value is RootDocumentControl<T> {
-    return value &&
+export function isRootDocumentControl<DocumentT extends DataDocument = DataDocument>(value: ValueControl | null | undefined): value is RootDocumentControl<DocumentT> {
+    return !!value &&
         value.type === 'document' &&
         'schema' in value &&
         (!value.schemaProperty || Object.is(value.schemaProperty, (<Schema>value.schema).getIdProperty()));
 }
+
+/**
+ * Get typed RootDocumentControl of specified ValueControl or throws error if root is not available.
+ * @param value - The control to root of.
+ * @returns RootDocumentControl of specified ValueControl
+ */
+export function getRootDocumentControl<DocumentT extends DataDocument = DataDocument>(value: ValueControl | null | undefined): RootDocumentControl<DocumentT> {
+    const rootOrNull = isValueControl(value) ? value.root : null;
+    if (!isRootDocumentControl<DocumentT>(rootOrNull)) {
+        throw new Error('Unable to find root node for the specified control.');
+    }
+    return rootOrNull;
+}
+
+
+
