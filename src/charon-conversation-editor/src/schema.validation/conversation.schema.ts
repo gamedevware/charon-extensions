@@ -1,8 +1,17 @@
-export const ConversationSchema = {
+import { SchemaDocument } from "charon-extensions";
+import { DeepReadonly } from "ts-essentials";
+
+interface DocumentCollections {
+    Collections: {
+        [schemaNameOrId: string]: SchemaDocument[]
+    }
+}
+
+const conversationSchema: DocumentCollections = {
     "Collections": {
         "Schema": [
             {
-                "Id": "68efe4c7c1e4b04cc8f8d232",
+                "Id": "_ID_DialogResponse_8d232",
                 "Name": "DialogResponse",
                 "DisplayName": "Dialog Response",
                 "Type": 1,
@@ -11,7 +20,7 @@ export const ConversationSchema = {
                 "Specification": "displayTextTemplate=%7BText%7D",
                 "Properties": [
                     {
-                        "Id": "68efe4c7c1e4b04cc8f8d22f",
+                        "Id": "_ID_68efe4c7c1e4b04cc8f8d22f",
                         "SharedProperty": null,
                         "Name": "Id",
                         "DisplayName": "Id",
@@ -25,7 +34,7 @@ export const ConversationSchema = {
                         "Specification": "display=hidden"
                     },
                     {
-                        "Id": "68efe4c7c1e4b04cc8f8d230",
+                        "Id": "_ID_68efe4c7c1e4b04cc8f8d230",
                         "SharedProperty": null,
                         "Name": "Text",
                         "DisplayName": "Text",
@@ -39,7 +48,7 @@ export const ConversationSchema = {
                         "Specification": "editor=localized-text-multiline"
                     },
                     {
-                        "Id": "68efe4edc1e4b04cc8f8d240",
+                        "Id": "_ID_68efe4edc1e4b04cc8f8d240",
                         "SharedProperty": null,
                         "Name": "NextNode",
                         "DisplayName": "Next Node",
@@ -49,14 +58,14 @@ export const ConversationSchema = {
                         "Uniqueness": 0,
                         "Requirement": 0,
                         "ReferenceType": {
-                            "Id": "68efe4cbc1e4b04cc8f8d239",
+                            "Id": "_ID_DialogNode_8d239",
                             "DisplayName": "Dialog Node"
                         },
                         "Size": 0,
                         "Specification": ""
                     },
                     {
-                        "Id": "68efe4c7c1e4b04cc8f8d231",
+                        "Id": "_ID_68efe4c7c1e4b04cc8f8d231",
                         "SharedProperty": null,
                         "Name": "Specification",
                         "DisplayName": "Specification",
@@ -72,7 +81,7 @@ export const ConversationSchema = {
                 ]
             },
             {
-                "Id": "68efe4cbc1e4b04cc8f8d239",
+                "Id": "_ID_DialogNode_8d239",
                 "Name": "DialogNode",
                 "DisplayName": "Dialog Node",
                 "Type": 1,
@@ -81,7 +90,7 @@ export const ConversationSchema = {
                 "Specification": "displayTextTemplate=%7BText%7D",
                 "Properties": [
                     {
-                        "Id": "68efe4cbc1e4b04cc8f8d234",
+                        "Id": "_ID_68efe4cbc1e4b04cc8f8d234",
                         "SharedProperty": null,
                         "Name": "Id",
                         "DisplayName": "Id",
@@ -95,7 +104,7 @@ export const ConversationSchema = {
                         "Specification": "display=hidden"
                     },
                     {
-                        "Id": "68efe4cbc1e4b04cc8f8d235",
+                        "Id": "_ID_68efe4cbc1e4b04cc8f8d235",
                         "SharedProperty": null,
                         "Name": "Text",
                         "DisplayName": "Text",
@@ -109,7 +118,7 @@ export const ConversationSchema = {
                         "Specification": "editor=localized-text-multiline"
                     },
                     {
-                        "Id": "68efe4cbc1e4b04cc8f8d236",
+                        "Id": "_ID_68efe4cbc1e4b04cc8f8d236",
                         "SharedProperty": null,
                         "Name": "NextNode",
                         "DisplayName": "Next Node",
@@ -119,14 +128,14 @@ export const ConversationSchema = {
                         "Uniqueness": 0,
                         "Requirement": 0,
                         "ReferenceType": {
-                            "Id": "68efe4cbc1e4b04cc8f8d239",
+                            "Id": "_ID_DialogNode_8d239",
                             "DisplayName": "Dialog Node"
                         },
                         "Size": 0,
                         "Specification": ""
                     },
                     {
-                        "Id": "68efe4cbc1e4b04cc8f8d237",
+                        "Id": "_ID_68efe4cbc1e4b04cc8f8d237",
                         "SharedProperty": null,
                         "Name": "Responses",
                         "DisplayName": "Responses",
@@ -136,14 +145,14 @@ export const ConversationSchema = {
                         "Uniqueness": 0,
                         "Requirement": 2,
                         "ReferenceType": {
-                            "Id": "68efe4c7c1e4b04cc8f8d232",
+                            "Id": "_ID_DialogResponse_8d232",
                             "DisplayName": "Dialog Response"
                         },
                         "Size": 0,
                         "Specification": ""
                     },
                     {
-                        "Id": "68efe4cbc1e4b04cc8f8d238",
+                        "Id": "_ID_68efe4cbc1e4b04cc8f8d238",
                         "SharedProperty": null,
                         "Name": "Specification",
                         "DisplayName": "Specification",
@@ -159,7 +168,7 @@ export const ConversationSchema = {
                 ]
             },
             {
-                "Id": "68efe4d3c1e4b04cc8f8d23e",
+                "Id": "_ID_ConversationTree_8d23e",
                 "Name": "ConversationTree",
                 "DisplayName": "Conversation",
                 "Type": 0,
@@ -168,7 +177,7 @@ export const ConversationSchema = {
                 "Specification": "editor=ext-conversation-editor&displayTextTemplate=%7BId%7D&icon=emoji%2Fspeech_balloon",
                 "Properties": [
                     {
-                        "Id": "68efe4d3c1e4b04cc8f8d23b",
+                        "Id": "_ID_68efe4d3c1e4b04cc8f8d23b",
                         "SharedProperty": null,
                         "Name": "Id",
                         "DisplayName": "Id",
@@ -182,7 +191,7 @@ export const ConversationSchema = {
                         "Specification": ""
                     },
                     {
-                        "Id": "68efe527c1e4b04cc8f8d243",
+                        "Id": "_ID_68efe527c1e4b04cc8f8d243",
                         "SharedProperty": null,
                         "Name": "RootNode",
                         "DisplayName": "Root Node",
@@ -192,14 +201,14 @@ export const ConversationSchema = {
                         "Uniqueness": 0,
                         "Requirement": 2,
                         "ReferenceType": {
-                            "Id": "68efe4cbc1e4b04cc8f8d239",
+                            "Id": "_ID_DialogNode_8d239",
                             "DisplayName": "Dialog Node"
                         },
                         "Size": 0,
                         "Specification": ""
                     },
                     {
-                        "Id": "68efe4d3c1e4b04cc8f8d23d",
+                        "Id": "_ID_68efe4d3c1e4b04cc8f8d23d",
                         "SharedProperty": null,
                         "Name": "Nodes",
                         "DisplayName": "Nodes",
@@ -209,14 +218,14 @@ export const ConversationSchema = {
                         "Uniqueness": 0,
                         "Requirement": 2,
                         "ReferenceType": {
-                            "Id": "68efe4cbc1e4b04cc8f8d239",
+                            "Id": "_ID_DialogNode_8d239",
                             "DisplayName": "Dialog Node"
                         },
                         "Size": 0,
                         "Specification": ""
                     },
                     {
-                        "Id": "68efe4d3c1e4b04cc8f8d23c",
+                        "Id": "_ID_68efe4d3c1e4b04cc8f8d23c",
                         "SharedProperty": null,
                         "Name": "Specification",
                         "DisplayName": "Specification",
@@ -233,4 +242,6 @@ export const ConversationSchema = {
             }
         ]
     }
-}
+};
+
+export const ConversationSchema: DeepReadonly<typeof conversationSchema> = conversationSchema;

@@ -1,20 +1,31 @@
-import { DataType, DocumentControl } from 'charon-extensions';
+import { DataType, DocumentControl, getRootDocumentControl } from 'charon-extensions';
 import { ConversationTree } from '../models';
 import { validateSchema } from './validate.schema';
 import { SchemaValidationError } from './schema.validation.error';
-import { useCallback } from 'react';
-import { ConversationSchema } from './conversation.schema';
+import { useCallback, useState } from 'react';
+import { DataSourceWithImport } from './game.data.source.with.import';
+import { migrateSchema } from './migrate.schema';
 
 function SchemaValidationResult({ documentControl }: { documentControl: DocumentControl<ConversationTree> }) {
     const errors = validateSchema(documentControl.schema);
     const validationResult = { isValid: !errors.length, errors };
 
-    const copySchemaHandler = useCallback(() => {
-        const textToCopy = JSON.stringify(ConversationSchema);
-        navigator.clipboard.writeText(textToCopy).catch(error => {
-            console.error('Failed to copy text to clipboard: ', error);
-        });
-    }, []);
+    const [migrationError, setMigrationError] = useState<string>('');
+    const services = getRootDocumentControl(documentControl).services;
+    const dataService = services.dataService as DataSourceWithImport;
+    const [migrateIsPending, setMigrateIsPending] = useState<boolean>(false);
+
+    // Renamed handler for clarity
+    const migrateSchemaHandler = useCallback(() => {
+        setMigrateIsPending(true); // Updated state name
+        setMigrationError(''); // reset error
+
+        migrateSchema(documentControl.schema, dataService)
+            .catch(error => setMigrationError(String(error)))
+            .catch(error => console.error(error))
+            .then(() => window.location.reload())
+            .finally(() => setMigrateIsPending(false)); // Updated state name
+    }, [dataService, documentControl]);
 
     return (
         <>
@@ -23,7 +34,7 @@ function SchemaValidationResult({ documentControl }: { documentControl: Document
                     <h2>Schema Validation</h2>
                     <p>
                         This editor requires a specific document schema to function properly. You can correct the errors listed below or
-                        import the entire schema directly.
+                        <strong>migrate</strong> the schema to the required format.
                     </p>
                     {validationResult.isValid ? (
                         <div className="ext-ce-validation-status valid">
@@ -48,16 +59,21 @@ function SchemaValidationResult({ documentControl }: { documentControl: Document
                 )}
 
                 <div className="ext-ce-schema-import">
-                    <h3>Importing Schema</h3>
-                    <p>You can create a proper data schema for the dialog editor by importing it:</p>
-                    <ol>
-                        <li>Go to <strong>Dashboard</strong> → <strong>Import Documents</strong></li>
-                        <li>Option: Create and Update → <strong>Next</strong></li>
-                        <li>Option: Clipboard → <strong>Next</strong></li>
-                        <li>Click the <button className='ext-ce-copy-button' onClick={copySchemaHandler} >Copy Schema</button> and paste into the input field → <strong>Next</strong></li>
-                        <li>Checkbox All → <strong>Import</strong></li>
-                    </ol>
+                    <h3>Schema Migration</h3>
+                    <p>
+                        <strong>Migrate</strong> the <span className='ext-ce-schema-name'>{documentControl.schema.displayName}</span> schema to the required structure. This action will attempt to fix structural issues while preserving existing data.
+                    </p>
+                    <button className='ext-ce-migrate-button' onClick={migrateSchemaHandler} disabled={migrateIsPending}>Migrate Schema</button>
                 </div>
+
+                {migrationError && (
+                    <div className="ext-ce-validation-error-item">
+                        <span className="ext-ce-error-message">
+                            <strong>Schema Migration Error:</strong> {migrationError}
+                        </span>
+
+                    </div>
+                )}
             </div>
         </>
     );

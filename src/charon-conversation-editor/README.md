@@ -10,6 +10,46 @@ This extension demonstrates how to create a custom document editor for Charon us
 It provides a visual, node-based interface for designing branching conversations and dialogs, making it easy for 
 game designers to create complex narrative structures without writing code.
 
+## Want to try it?
+
+This example has a built package on NPM, if you just want to try it out, follow these steps:
+
+### OPTION 1: Migrate Existing Schema
+
+- Go to the **Extensions** section of the **Project Settings**.
+- Read and agree to the disclaimer regarding the extensions.
+- Add the **charon-conversation-editor** extension to the list, leaving the version field blank.
+- Click the **Update** button.
+- Go to the project dashboard.
+- Click **Add New Scheme**.
+- Name it something like *MyConversation*.
+- Click **Show Advanced Options** at the bottom of the page.
+- In the **Editor** field that appears, select **Conversation Editor**.
+- Click Save.
+- Go to the list of documents for the *MyConversation* new scheme.
+- Click **Create** and in the form that opens at the bottom, switch the view mode to **Graph**.
+- At the bottom of the list of discrepancies, there is a **Migrate** button.
+
+### OPTION 2: Import Conversation Editor Schemas (Recommended)
+
+- Go to the **Extensions** section of the **Project Settings**.
+- Read and agree to the disclaimer regarding the extensions.
+- Add the **charon-conversation-editor** extension to the list, leaving the version field blank.
+- Click the **Update** button.
+- Go to the project dashboard.
+- Click **Import Documents**.
+- Select **Create and Update**. Next.
+- Select the **Clipboard** data source. Next.
+- Paste the contents of the [conversation_schemas_to_import.json](conversation_schemas_to_import.json) file. Next.
+- Select **All** collections.
+- Click **Import**.
+
+### After Import/Migration
+
+After the page reloads, the editor will be fully functional.  
+You can modify the created schemas. If anything is incorrect with these schemas, you'll see a list of errors that need to be corrected manually.  
+**Don't click Migrate again to fix them!** 
+
 ## What is This Example?
 
 The Conversation Editor is a fully functional Charon extension that:
@@ -236,7 +276,6 @@ This generates a `.tgz` file that can be installed in Charon.
 - [Creating Charon Extensions Guide](https://gamedevware.github.io/charon/advanced/extensions/creating_react_extension.html)
 - [React Flow Documentation](https://reactflow.dev/)
 - [Web Components Specification](https://developer.mozilla.org/en-US/docs/Web/Web_Components)
-- [Conversation Tree Schema for Import into Charon](conversation_schemas_to_import.json)
 
 ## License
 

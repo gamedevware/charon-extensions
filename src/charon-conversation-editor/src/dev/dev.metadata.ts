@@ -1,4 +1,8 @@
-import { DataDocument, DataDocumentReference, DataType, IdGeneratorType, Language, Metadata, ProjectSettings, Requirement, Schema, SchemaProperty, SchemaReference, SchemaType, SpecificationDictionary, Uniqueness } from "charon-extensions";
+import {
+    DataDocument, DataDocumentReference, DataType, IdGeneratorType, Language, Metadata, ProjectSettings, Requirement,
+    Schema, SchemaDocument, SchemaProperty, SchemaPropertyDocument, SchemaReference, SchemaType,
+    SpecificationDictionary, Uniqueness
+} from "charon-extensions";
 
 export class DevMetadata implements Metadata {
 
@@ -255,6 +259,18 @@ export class DevSchema implements Schema {
     }
     public getHashCode(): number {
         return 0;
+    }
+    public toDocument(): SchemaDocument {
+        return {
+            Id: this.id,
+            Name: this.name,
+            DisplayName: this.displayName,
+            Type: this.type,
+            Description: this.description,
+            IdGenerator: this.idGenerator,
+            Specification: this.specification,
+            Properties: this.properties.map(property => property.toDocument())
+        };
     }
     public toString(): string {
         return this.name;
@@ -792,6 +808,24 @@ export class DevSchemaProperty implements SchemaProperty {
     }
     public getHashCode(): number {
         return 0;
+    }
+    public toDocument(): SchemaPropertyDocument {
+        return {
+
+            Id: this.id,
+            SharedProperty: this.sharedProperty ? { Id: this.sharedProperty.id } : null,
+            Name: this.name,
+            DisplayName: this.displayName,
+            Description: this.description,
+            DataType: this.dataType,
+            DefaultValue: this.defaultValue,
+            Uniqueness: this.uniqueness,
+            Requirement: this.requirement,
+            ReferenceType: this.referenceType ? { Id: this.referenceType.id, DisplayName: this.referenceType.displayName } : null,
+            Size: this.size,
+            Specification: this.specification,
+
+        };
     }
     public toString(): string {
         return this.name;
