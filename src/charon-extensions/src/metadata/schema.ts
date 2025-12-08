@@ -3,6 +3,7 @@ import type { SchemaProperty } from "./schema.property";
 import type { SpecificationDictionary } from "./specification.dictionary";
 import { SchemaType } from "./schema.type";
 import { IdGeneratorType } from "./id.generator.type";
+import type { SchemaDocument } from "./schema.document";
 
 export declare interface Schema {
     readonly metadata: Metadata;
@@ -32,5 +33,6 @@ export declare interface Schema {
     formatDisplayText(document: object, specificationOverride?: SpecificationDictionary): string;
 
     getHashCode(): number;
+    toDocument(): SchemaDocument;
     toString(): string;
 }

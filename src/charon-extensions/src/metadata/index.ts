@@ -10,3 +10,4 @@ export * from './schema';
 export * from './schema.property';
 export * from './schema.reference';
 export * from './project.settings';
+export * from './schema.document';

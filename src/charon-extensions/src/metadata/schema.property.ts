@@ -5,6 +5,7 @@ import type { SpecificationDictionary } from "./specification.dictionary";
 import { Uniqueness } from "./uniqueness";
 import { Requirement } from "./requirement";
 import { DataType } from "./data.type";
+import type { SchemaPropertyDocument } from "./schema.document";
 
 export declare interface SchemaProperty {
     readonly id: string;
@@ -35,5 +36,6 @@ export declare interface SchemaProperty {
     getMaxValue(): bigint | undefined;
 
     getHashCode(): number;
+    toDocument(): SchemaPropertyDocument;
     toString(): string;
 }
