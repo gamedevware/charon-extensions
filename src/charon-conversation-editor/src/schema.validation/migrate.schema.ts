@@ -50,14 +50,14 @@ export async function migrateSchema(schema: Schema, dataSource: DataSourceWithIm
         }
     };
     const importQuery = from(dataSource.import(
-        // type of documents to import = Schema
-        ['Schema'],
-        // languages = all
-        [],
         // documents
         importDocuments,
+        // type of documents to import = Schema
+        ['Schema'],
         // import mode
         ImportMode.createAndUpdate,
+        // languages = all
+        undefined,                
         // validation options = default for creation/updating
         [
             ValidationOption.repair,

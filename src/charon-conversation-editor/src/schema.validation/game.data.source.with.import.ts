@@ -5,8 +5,8 @@ type DataSource = Required<RootDocumentControl['services']['dataService']>;
 // this ADHOC usage of internal API, do not use this code in your project
 
 export type DataSourceWithImport = DataSource & {
-    import(schemas: ReadonlyArray<string>, languages: ReadonlyArray<string>, collections: object,
-        importMode: ImportMode, validationOptions?: ReadonlyArray<ValidationOption>, dryRun?: boolean): ObservableLike<BulkChangeResult>;
+    import(collections: object, schemas?: ReadonlyArray<string>, importMode?: ImportMode, languages?: ReadonlyArray<string>,
+        validationOptions?: ReadonlyArray<ValidationOption>, dryRun?: boolean): ObservableLike<BulkChangeResult>;
 };
 
 export interface BulkChangeResult {
