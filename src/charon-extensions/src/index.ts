@@ -7,6 +7,7 @@ export * from './property.editor.element';
 export * from './schema.editor.element';
 export * from './time.span';
 export * from './json.pointer';
+export * from './app.version';
 
 
 export const ERROR_CUSTOM_PROPERTY = 'custom';
