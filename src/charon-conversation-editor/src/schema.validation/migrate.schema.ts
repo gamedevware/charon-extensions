@@ -52,12 +52,12 @@ export async function migrateSchema(schema: Schema, dataSource: DataSourceWithIm
     const importQuery = from(dataSource.import(
         // documents
         importDocuments,
-        // type of documents to import = Schema
-        ['Schema'],
         // import mode
         ImportMode.createAndUpdate,
+        // type of documents to import = Schema
+        ['Schema'],
         // languages = all
-        undefined,                
+        undefined,
         // validation options = default for creation/updating
         [
             ValidationOption.repair,

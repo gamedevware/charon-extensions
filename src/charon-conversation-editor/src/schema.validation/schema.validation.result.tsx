@@ -21,9 +21,16 @@ function SchemaValidationResult({ documentControl }: { documentControl: Document
         setMigrationError(''); // reset error
 
         migrateSchema(documentControl.schema, dataService)
-            .catch(error => setMigrationError(String(error)))
-            .catch(error => console.error(error))
-            .then(() => window.location.reload())
+            .then(
+                () => {
+                    window.location.reload();
+                    console.log(`Successfully migrated ${documentControl.schema.displayName} schema.`);
+                },
+                (error) => {
+                    setMigrationError(String(error));
+                    console.error(error);
+                }
+            )
             .finally(() => setMigrateIsPending(false)); // Updated state name
     }, [dataService, documentControl]);
 
