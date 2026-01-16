@@ -25,8 +25,35 @@ export interface RootDocumentControlServices {
     readonly aiChatService: {
         startThread(systemPrompt: string): ObservableLike<AiChatThread>;
     };
+    readonly undoRedo: {
+        readonly stateChange: ObservableLike<void>
+
+        readonly canUndo: boolean;
+        readonly canRedo: boolean;
+
+        undo(): void;
+        redo(): void;
+
+        push(action: { redo: () => void; undo: () => void; batchGroup?: string; allowBatching?: boolean }): void;
+        clear(): void;
+    };
+    readonly uiState: {
+        load(score: 'document' | 'schema', layer: keyof typeof PreferenceLayer): Object | undefined;
+        save(score: 'document' | 'schema', layer: keyof typeof PreferenceLayer, state: Object | null | undefined): void;
+    };
     readonly serverApiClient: any;
 }
+
+export enum PreferenceLayer {
+    browserSession = 0,
+    browserPersonal = 1,
+    browserShared = 2,
+    projectPersonal = 3,
+    projectTeam = 4,
+    workspacePersonal = 5,
+    workspaceTeam = 6,
+    default = 7
+};
 
 export enum FilterOperator {
     greaterThan = 0,
