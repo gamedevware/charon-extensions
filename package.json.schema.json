@@ -33,6 +33,9 @@
                                         },
                                         "description": "Editor usage type:\n- 'Property' — used as a field editor in forms.\n- 'Grid' — used as a cell editor in grids.\n- 'Schema' — replaces the entire form, e.g., with a graph or node editor."
                                     },
+                                    "icon": {
+                                        "type": "string"
+                                    },
                                     "selector": {
                                         "type": "string",
                                         "description": "Custom HTML element name registered with 'customElements.define'. Typically starts with 'ext', e.g., 'ext-color-picker'."
@@ -76,6 +79,42 @@
                                     "selector",
                                     "name"
                                 ]
+                            }
+                        },
+                        "customActions": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "minLength": 1
+                                    },
+                                    "tooltip": {
+                                        "type": "string"
+                                    },
+                                    "icon": {
+                                        "type": "string"
+                                    },
+                                    "functionName": {
+                                        "type": "string",
+                                        "minLength": 1
+                                    },
+                                    "location": {
+                                        "type": "string",
+                                        "enum": [
+                                            "new-schema-menu",
+                                            "document-action-menu",
+                                            "grid-action-menu"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "name",
+                                    "functionName",
+                                    "location"
+                                ],
+                                "additionalProperties": false
                             }
                         }
                     }
