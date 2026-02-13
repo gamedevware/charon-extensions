@@ -3,6 +3,7 @@ import type { DocumentControl, ValueControl } from './controls';
 export * from './reactive';
 export * from './controls';
 export * from './metadata';
+export * from './services';
 export * from './property.editor.element';
 export * from './schema.editor.element';
 export * from './time.span';

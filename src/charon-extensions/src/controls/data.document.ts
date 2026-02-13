@@ -1,3 +1,6 @@
+export interface GameDataDocument {
+    ['Collections']: { [schemaName: string]: Array<DataDocument> };
+}
 
 export interface DataDocument {
     [index: string]: DataDocumentValue | undefined;
