@@ -1,6 +1,6 @@
 import { DataDocumentValue, ObservableLike, RootDocumentControl } from "charon-extensions";
 
-type DataSource = Required<RootDocumentControl['services']['dataService']>;
+type DataSource = Required<RootDocumentControl['services']['gameData']>;
 
 // this ADHOC usage of internal API, do not use this code in your project
 

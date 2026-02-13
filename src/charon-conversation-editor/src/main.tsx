@@ -2,6 +2,9 @@ import { createRoot } from 'react-dom/client'
 import ConversationEditorElement from './conversation.editor.element.tsx';
 import { defineJsonPointer, createDevValueControl, defineStubElements, defineTimeSpan, persistToLocalStorage } from './dev/index.ts';
 import { initialConversation } from './dev/initial.conversation.ts';
+import { createConversationSchema } from './schema.validation/migrate.schema.ts';
+export { createConversationSchema } from './schema.validation/migrate.schema.ts';
+
 /**
  * Register the conversation editor as a custom HTML element
  * This enables usage as <ext-conversation-editor> in HTML
@@ -70,3 +73,6 @@ if (isDev) {
     <ext-conversation-editor documentControl={devValueControl} />
   )
 }
+
+// this will keep function from tree-shaking
+(window as any).createConversationSchema = createConversationSchema;

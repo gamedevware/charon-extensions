@@ -29,7 +29,7 @@ export function useLocalizedText(text: string | DataLocalizationDocument): strin
     const [localizedText, setLocalizedText] = useState('');
 
     useEffect(() => {
-        const currentLanguage$ = from(conversationTreeControl.services?.langugeSelectionService?.currentLanguage$ ?? of(undefined));
+        const currentLanguage$ = from(conversationTreeControl.services?.translationLanguage?.currentLanguage$ ?? of(undefined));
         const subscription = currentLanguage$.subscribe({
             next: currentLanguage => setLocalizedText(extractLocalizedText(text, currentLanguage))
         });

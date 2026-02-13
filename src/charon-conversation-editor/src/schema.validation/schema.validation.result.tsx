@@ -3,7 +3,6 @@ import { ConversationTree } from '../models';
 import { validateSchema } from './validate.schema';
 import { SchemaValidationError } from './schema.validation.error';
 import { useCallback, useState } from 'react';
-import { DataSourceWithImport } from './game.data.source.with.import';
 import { migrateSchema } from './migrate.schema';
 
 function SchemaValidationResult({ documentControl }: { documentControl: DocumentControl<ConversationTree> }) {
@@ -11,16 +10,16 @@ function SchemaValidationResult({ documentControl }: { documentControl: Document
     const validationResult = { isValid: !errors.length, errors };
 
     const [migrationError, setMigrationError] = useState<string>('');
-    const services = getRootDocumentControl(documentControl).services;
-    const dataService = services.dataService as DataSourceWithImport;
     const [migrateIsPending, setMigrateIsPending] = useState<boolean>(false);
 
+    const services = getRootDocumentControl(documentControl).services;
+    const gameData = services.gameData;
     // Renamed handler for clarity
     const migrateSchemaHandler = useCallback(() => {
         setMigrateIsPending(true); // Updated state name
         setMigrationError(''); // reset error
 
-        migrateSchema(documentControl.schema, dataService)
+        migrateSchema(documentControl.schema, gameData)
             .then(
                 () => {
                     window.location.reload();
@@ -32,7 +31,7 @@ function SchemaValidationResult({ documentControl }: { documentControl: Document
                 }
             )
             .finally(() => setMigrateIsPending(false)); // Updated state name
-    }, [dataService, documentControl]);
+    }, [gameData, documentControl]);
 
     return (
         <>
