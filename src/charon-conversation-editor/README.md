@@ -1,290 +1,168 @@
 # Charon Conversation Editor Extension
 
-A visual node-based conversation/dialog editor extension for [Charon](https://gamedevware.com/) game data editor, built with React and React Flow.
+A visual node-based conversation/dialog editor for [Charon](https://gamedevware.com/), built with React and [React Flow](https://reactflow.dev/).
 
-<img width="1065" alt="dashboard" src="./screenshot.png"/>  
+<img width="1065" alt="dashboard" src="./screenshot.png"/>
 
-## Overview
+## Quick Start
 
-This extension demonstrates how to create a custom document editor for Charon using Web Components and React. 
-It provides a visual, node-based interface for designing branching conversations and dialogs, making it easy for 
-game designers to create complex narrative structures without writing code.
-
-## Want to try it?
-
-This example has a built package on NPM, if you just want to try it out, follow these steps:
-
-### OPTION 1: Migrate Existing Schema
-
-- Go to the **Extensions** section of the **Project Settings**.
-- Read and agree to the disclaimer regarding the extensions.
-- Add the **charon-conversation-editor** extension to the list, leaving the version field blank.
-- Click the **Update** button.
-- Go to the project dashboard.
-- Click **Add New Scheme**.
-- Name it something like *MyConversation*.
-- Click **Show Advanced Options** at the bottom of the page.
-- In the **Editor** field that appears, select **Conversation Editor**.
-- Click Save.
-- Go to the list of documents for the *MyConversation* new scheme.
-- Click **Create** and in the form that opens at the bottom, switch the view mode to **Graph**.
-- At the bottom of the list of discrepancies, there is a **Migrate** button.
-
-### OPTION 2: Import Conversation Editor Schemas (Recommended)
-
-- Go to the **Extensions** section of the **Project Settings**.
-- Read and agree to the disclaimer regarding the extensions.
-- Add the **charon-conversation-editor** extension to the list, leaving the version field blank.
-- Click the **Update** button.
-- Go to the project dashboard.
-- Click **Import Documents**.
-- Select **Create and Update**. Next.
-- Select the **Clipboard** data source. Next.
-- Paste the contents of the [conversation_schemas_to_import.json](conversation_schemas_to_import.json) file. Next.
-- Select **All** collections.
-- Click **Import**.
-
-### After Import/Migration
-
-After the page reloads, the editor will be fully functional.  
-You can modify the created schemas. If anything is incorrect with these schemas, you'll see a list of errors that need to be corrected manually.  
-**Don't click Migrate again to fix them!** 
-
-## What is This Example?
-
-The Conversation Editor is a fully functional Charon extension that:
-- Provides a visual graph-based editor for dialog trees
-- Allows drag-and-drop node creation and connection
-- Supports different dialog node types (conversations, response choices)
-- Automatically saves changes back to your Charon game data
-- Demonstrates best practices for building custom Charon editors
-
-## Architecture: Web Components + React
-
-This extension uses **Web Components** as a wrapper around a **React application**. This architecture allows:
-
-1. **Framework Agnostic Integration**: Charon can load the extension without knowing it's built with React
-2. **Encapsulation**: Logic is isolated from the main Charon application
-3. **Reusability**: The component can be distributed via NPM and used across projects
-
-### How It Works
-
-```
-Charon Application
-    ↓
-Custom Element (<ext-conversation-editor>)
-    ↓
-React Application (with React Flow)
-    ↓
-Your Game Data
-```
-
-The Web Component acts as a bridge, implementing the `CharonSchemaEditorElement` interface to receive data from Charon and sending updates back when the user makes changes.
-
-## Key Files for Customization
-
-### Core Extension Files
-
-#### `src/main.tsx`
-**Purpose**: Entry point that registers the Web Component with the browser.
-- Defines the custom element tag name (e.g., `ext-conversation-editor`)
-- Bootstraps the React application
-- **Customize**: Change the element name or registration logic here, don't forget to update `src/package.json` to reflect new element name
-
-#### `src/schema.validation/validate.schema.ts`
-**Purpose**: Logic for validating the schema for compliance with the structure required by the editor
-- Checks that the `Schema` contains the required properties.
-- **Customize**: Change if you require additional required schema properties
-
-#### `src/conversation.editor.element.tsx`
-**Purpose**: The Web Component wrapper that interfaces with Charon.
-- Implements `CharonSchemaEditorElement` interface
-- Manages subscriptions to `documentControl` from Charon
-- **Customize**: Modify how data is passed between Charon and React, add validation logic
-
-#### `src/dev/
-A folder containing a set of mocks simulating the extension's harness during development  
-
-#### `src/reactive/
-A folder containing a set of **React** state system adapters for **Rx.js**  
-
-#### `package.json`
-**Purpose**: Defines the extension metadata and Charon integration.
-- Contains the `config.customEditors` section that tells Charon about your extension
-- Specifies which data types and contexts the editor supports
-- **Customize**: Update editor name, Web Component name, styles, and other metadata
-
-```json
-  "config": {
-    "customEditors": [
-      {
-        "id": "ext-conversation-editor",
-        "selector": "ext-conversation-editor",
-        "name": "Conversation Editor",
-        "type": [
-          "Schema"
-        ]
-      }
-    ]
-  }
-```
-
-### UI Components
-
-#### `src/conversation.editor.tsx`
-**Purpose**: Main React component that renders the React Flow editor.
-- Sets up the React Flow instance
-- Manages node and edge state
-- Handles user interactions (add node, delete, connect)
-- **Customize**: Modify editor layout, add toolbar buttons, change default behaviors
-
-#### `src/components/nodes/`
-**Purpose**: Custom node components for different dialog node types.
-- `dialog.tree.node.tsx`: Standard conversation node
-- `root.node.tsx`: Conversation start node (start marker)
-- **Customize**: Create new node types, modify appearance, add custom fields
-
-#### `src/components/property.drawer/property.drawer.tsx`
-**Purpose**: A panel for displaying the properties of the selected dialog node.
-- **Customize**: Add new controls, modify layout, create custom tools for dialog nodes.
-
-### Data & State Management
-
-#### `src/state/use.control.to.flow.sync.ts`
-**Purpose**: Custom React hook for managing conversation data.
-- Converts between Charon's data format and React Flow's node/edge format (see `src/state/conversation.state.ts`)
-- Handles data transformations
-- **Customize**: Modify data structure, add new fields, change serialization
-
-#### `src/models/conversation.tree .ts`
-**Purpose**: TypeScript type definitions for expected conversation data model
-- Defines the shape of conversation data
-- Node types, edge types, and editor state
-- **Customize**: Extend types for new features, don't forget to check for new properties in `src/schema.validation/validate.schema.ts`
-
-## React Flow Integration
-
-### What is React Flow?
-
-[React Flow](https://reactflow.dev/) is a library for building node-based editors and interactive diagrams. It handles:
-- Node rendering and positioning
-- Edge (connection) drawing and routing
-- Drag-and-drop interactions
-- Zoom and pan controls
-- Selection and multi-selection
-
-### How It's Used in This Editor
-
-#### 1. **Node Layout**
-```tsx
-<ReactFlow
-  nodes={nodes}              // Array of conversation nodes
-  edges={edges}              // Connections between nodes
-  onNodesChange={onNodesChange}
-  onEdgesChange={onEdgesChange}
-  onConnect={onConnect}
-  nodeTypes={nodeTypes} // Your custom node components
-/>
-```
-
-#### 2. **Custom Node Types**
-Each node type is a React component:
-```tsx
-const nodeTypes = {
-  dialogue: DialogueNode,    // Character speech
-  choice: ChoiceNode,        // Player options (not implemented)
-  condition: ConditionNode   // Logic branches (not implemented)
-};
-```
-
-#### 3. **Node Structure**
-Each node in React Flow contains:
-```typescript
-{
-  id: string,              // Unique identifier
-  type: 'dialogue' | 'choice' | 'condition',
-  position: { x: number, y: number },
-  data: {                  // Your custom data
-    valueControl: ValueControl<DialogueNode> | ValueControl<ChoiceNode> | ValueControl<ConditionNode>,
-    // ... other fields
-  }
-}
-```
-
-#### 4. **Edges (Connections)**
-Edges connect nodes:
-```typescript
-{
-  id: string,
-  source: string,          // Source node ID
-  target: string,          // Target node ID
-  label?: string           // Optional label on connection
-}
-```
-
-## Getting Started
-
-### Prerequisites
-- Node.js 21+
-- npm or yarn
-- Basic knowledge of React and TypeScript
-
-### Installation
 ```bash
 npm install
+npm start       # Vite dev server with mock data
+npm run build   # Produces dist/*.tgz for publishing
 ```
 
-### Development
-```bash
-npm start
+## Try It in Charon
+
+Install the published package or upload a local build:
+
+1. Go to **Project Settings > Extensions**, add `charon-conversation-editor`, click **Update**.
+2. Create the conversation schemas using one of:
+   - **Custom action** (recommended): On the project dashboard, click **Add New Schema** and select **Create Conversation Schema** from the menu.
+   - **Manual import**: Click **Import Documents**, choose **Create and Update > Clipboard**, paste contents of [conversation_schemas_to_import.json](conversation_schemas_to_import.json), select **All** collections, and import.
+   - **Migrate existing schema**: Create a schema, set its editor to **Conversation Editor** in advanced options, create a document, switch to **Graph** view, and click **Migrate**.
+3. After the page reloads the editor is ready. If migration reports schema errors, fix them manually — **do not click Migrate again**.
+
+## Architecture
+
+```
+Charon host application
+  -> <ext-conversation-editor>   (Web Component, registered in main.tsx)
+    -> React app                 (ConversationEditor, mounted inside shadow-less custom element)
+      -> React Flow              (node graph rendering, layout via dagre)
+        -> DocumentControl       (two-way sync with Charon's data model)
 ```
 
-### Building
-```bash
-npm run build
+The extension registers a custom element that implements `CharonSchemaEditorElement`. Charon sets `documentControl` on the element, which is a `RootDocumentControl` providing access to the document's value tree, validation, undo/redo, and services. The React layer subscribes to control value changes and writes back through `setValue`/`patchValue`.
+
+### Extension Registration (package.json)
+
+```jsonc
+{
+  "config": {
+    "customEditors": [{
+      "id": "ext-conversation-editor",
+      "selector": "ext-conversation-editor",  // custom element tag name
+      "name": "Conversation Editor",
+      "type": ["Schema"]                       // full-document editor
+    }],
+    "customActions": [{
+      "name": "Create Conversation Schema",
+      "functionName": "createConversationSchema",  // exported from main entry or declared on globalThis (window)
+      "location": "new-schema-menu",
+      "icon": "emoji/speech_balloon"
+    }]
+  }
+}
 ```
 
-This generates a `.tgz` file that can be installed in Charon.
+## Project Structure
 
-### Testing in Charon
+```
+src/
+  main.tsx                          # Entry point: registers custom element + exports custom action
+  conversation.editor.element.tsx   # Web Component bridge (CharonSchemaEditorElement -> React)
+  conversation.editor.tsx           # Root React component (React Flow setup, toolbar)
+  error.boundary.tsx                # Error boundary wrapper
 
-1. Build the extension: `npm run build`
-2. In Charon's **Project Settings → Extensions** use **Upload NPM Package...** button to upload newly build package from `src\charon-conversation-editor\dist\` folder
-3. Add your extension to the project's extension list
-4. Create or edit a document schema and select "Conversation Editor" as the custom editor
+  models/                           # TypeScript types for the conversation data model
+    conversation.tree.ts            #   Top-level conversation tree structure
+    dialog.node.ts                  #   Dialog node (NPC line, narration)
+    dialog.response.ts              #   Player response/choice
+    dialog.node.reference.ts        #   Reference linking nodes
 
-## Customization Ideas
+  nodes/                            # React Flow node components and hooks
+    dialog.tree.node.tsx            #   Dialog node renderer
+    dialog.tree.response.tsx        #   Response choice renderer
+    root.node.tsx                   #   Conversation root (start marker)
+    node.types.ts                   #   Node type registry for React Flow
+    document.control.functions.ts   #   Helpers for reading/writing DocumentControl values
+    use.control.to.flow.sync.ts     #   Hook: syncs DocumentControl <-> React Flow nodes/edges
+    use.control.copy.paste.monitor.ts
+    use.control.focus.target.ts
+    use.delete.control.handler.ts
+    use.selected.control.monitor.ts
 
-### Add New Node Types
-1. Create a new component in `src/nodes/NewNodeType.tsx`
-2. Register it in `nodeTypes: NodeTypes` in `src\nodes\node.types.ts`
-3. Add the new node type to your sidebar drawer or to some toolbar
+  state/                            # App-level state and context
+    conversation.state.ts           #   Converts between Charon data format and React Flow format
+    conversation.context.ts         #   React context for sharing conversation state
+    undo.redo.state.ts              #   Undo/redo state tracking
+    undo.redo.context.ts            #   React context for undo/redo
+    use.undo.redo.function.ts       #   Hook: wires into Charon's UndoRedoService
+    use.localized.text.ts           #   Hook: resolves localized text for current language
 
-### Integrate with AI
-- Add a button to generate dialogue using GPT API
-- Auto-suggest character responses
-- Validate grammar and style
+  controls/                         # Toolbar button components
+    undo.button.tsx
+    redo.button.tsx
+    auto.layout.button.tsx
 
-### Implement Version Control
-- Save conversation snapshots
-- Add diff view to compare versions
-- Allow branching and merging of conversation trees
+  property.drawer/                  # Side panel for editing selected node properties
+    property.drawer.tsx             #   Drawer container with resize
+    property.drawer.content.tsx     #   Property fields rendered via Charon's built-in elements
+
+  schema.validation/                # Schema migration and validation
+    validate.schema.ts              #   Checks schema has required properties
+    migrate.schema.ts               #   Migrates/creates conversation schemas via GameDataService
+    conversation.schema.ts          #   Expected schema shape definition
+    schema.validation.result.tsx    #   UI for displaying validation errors
+
+  reactive/                         # React hooks for charon-extensions reactive types
+    use.observable.function.ts      #   Hook: subscribes to ObservableLike<T>
+    use.control.value.function.ts   #   Hook: tracks ValueControl.value
+    use.control.disabled.status.function.ts
+    use.control.read.only.status.function.ts
+    use.debounce.function.ts
+
+  dev/                              # Development mocks (only used by Vite dev server)
+    create.dev.value.control.ts     #   Creates mock ValueControl/DocumentControl tree
+    dev.value.control.ts            #   Mock ValueControl implementation
+    dev.document.control.ts         #   Mock DocumentControl implementation
+    dev.root.document.control.ts    #   Mock RootDocumentControl with stub services
+    dev.metadata.ts                 #   Mock Metadata/Schema/SchemaProperty
+    initial.conversation.ts         #   Sample conversation data for development
+    persist.to.local.storage.function.ts  # Persists dev state to localStorage
+```
+
+## Key Integration Points
+
+### Data Flow: Charon <-> React Flow
+
+`useControlToFlowSync` is the central hook. It:
+1. Reads the `RootDocumentControl` value (a conversation tree with dialog nodes)
+2. Converts it into React Flow `Node[]` and `Edge[]` via `conversationState.ts`
+3. On user edits (drag, connect, delete), writes changes back via `DocumentControl.setValue`/`patchValue`
+
+### Property Drawer
+
+When a node is selected, `PropertyDrawer` renders Charon's built-in field elements (`<charon-text-field>`, `<charon-localized-text-field>`, etc.) by passing the node's child `ValueControl` to each element. This reuses Charon's native field editing, validation, and localization support.
+
+### Schema Validation & Migration
+
+On mount, `validateSchema` checks the document's schema has the expected properties (node text, responses, references). If properties are missing, `SchemaValidationResult` displays errors with an option to auto-migrate via `migrateSchema`, which uses `GameDataService.bulkChange` to create/update the required schemas.
+
+### Custom Action: Create Conversation Schema
+
+Exported from `main.tsx` as `createConversationSchema`. Receives an `ExtensionActionContext` and uses `GameDataService` to create the conversation schemas programmatically — an alternative to the JSON import flow.
+
+### Undo/Redo
+
+The editor wires into Charon's `UndoRedoService` via `useUndoRedo`. Node moves, connections, and property edits are pushed as undoable actions with batch grouping (e.g., sequential typing is combined into one undo step).
+
+## Development
+
+`npm start` launches Vite with mock implementations from `src/dev/`. These simulate the `RootDocumentControl`, `DocumentControl`, `Metadata`, and services so the editor runs standalone without Charon. Mock state is persisted to `localStorage`.
+
+To test inside Charon:
+1. `npm run build`
+2. In Charon **Project Settings > Extensions**, click **Upload NPM Package** and select the `.tgz` from `dist/`
 
 ## Resources
 
-- [Charon Documentation](https://gamedevware.github.io/charon/)
-- [Creating Charon Extensions Guide](https://gamedevware.github.io/charon/advanced/extensions/creating_react_extension.html)
+- [Creating a Custom Editor with React](https://gamedevware.github.io/charon/advanced/extensions/creating_react_extension.html)
+- [Charon Extensions Overview](https://gamedevware.github.io/charon/advanced/extensions/overview.html)
 - [React Flow Documentation](https://reactflow.dev/)
-- [Web Components Specification](https://developer.mozilla.org/en-US/docs/Web/Web_Components)
+- [Charon Repository](https://github.com/gamedevware/charon)
 
 ## License
 
 MIT
-
-## Contributing
-
-Contributions are welcome! This example serves as a template for building custom Charon editors. Feel free to fork and modify for your own game's needs.
-
----
-
-**Need Help?** Check the [Charon Discord](https://discord.gg/gamedevware) or [GitHub Issues](https://github.com/gamedevware/charon-extensions/issues).

@@ -1,93 +1,89 @@
 # Charon UI Extensions
 
-This repository contains example projects for building **custom UI extensions** for [Charon](https://github.com/gamedevware/charon), a data modeling and game data editing tool.  
-Charon supports a plugin architecture using **Web Components** packaged as **NPM modules**, allowing developers to integrate custom field, grid, or schema editors.
+Example projects and shared type definitions for building custom UI extensions for [Charon](https://github.com/gamedevware/charon), a game data editor. Extensions are **Web Components** packaged as **NPM modules**.
 
-## 📦 Repository Structure
-
-This repository includes both **React** and **Angular** implementations of custom field editors, along with shared type definitions:
+## Repository Structure
 
 ```
-/src
-├── charon-extensions/           # Base types and utilities for building extensions
-├── charon-conversation-editor/  # React-based Conversation document editor
-├── charon-logical-toggle/       # React-based Logical Toggle field editor
-└── charon-color-picker/         # Angular-based Color Picker (HEX) editor
+src/
+  charon-extensions/           TypeScript types and interfaces (the extension API contract)
+  charon-logical-toggle/       React property editor   — simplest example, good starting point
+  charon-color-picker/         Angular property editor  — demonstrates Angular zoneless setup
+  charon-conversation-editor/  React schema editor      — full-document editor with React Flow
 ```
 
----
+Each package builds independently — `cd` into the package directory and run `npm install && npm run build`.
 
-## 🧩 Available Examples
+## Choosing a Starting Point
 
-### Logical Toggle (React)
+| You want to...                         | Start with                  |
+|----------------------------------------|-----------------------------|
+| Build a simple field editor (React)    | `charon-logical-toggle`     |
+| Build a simple field editor (Angular)  | `charon-color-picker`       |
+| Build a full document editor           | `charon-conversation-editor`|
+| Understand the extension API           | `charon-extensions`         |
 
-A toggle button field editor for Boolean values (`Logical` type), written in **React** and compiled as a Web Component.
+## Extension Types
 
- [View Source Code](https://github.com/gamedevware/charon-extensions/tree/main/src/charon-logical-toggle)
+Extensions register editors via `config.customEditors` in `package.json`:
 
-### Conversation Editor (React)
+- **Property** / **Grid** editors replace individual field inputs. They implement `CharonPropertyEditorElement` and receive a `ValueControl` for a single property.
+- **Schema** editors replace the entire document editing view. They implement `CharonSchemaEditorElement` and receive a `RootDocumentControl` for the full document.
 
-A conversation editor for `ConversationTree` schema, written in **React** and compiled as a Web Component.
+Extensions can also register **Custom Actions** via `config.customActions` — functions invoked from Charon's menus (e.g., "Create Conversation Schema" in the new-schema menu).
 
- [View Source Code](https://github.com/gamedevware/charon-extensions/tree/main/src/charon-conversation-editor)
+## How Extensions Work
 
+```
+Charon (host app)
+  1. Reads package.json → discovers custom editors/actions
+  2. Loads the extension's JS entry point
+  3. Creates the custom element (e.g., <ext-logical-toggle-editor>)
+  4. Sets valueControl (property editor) or documentControl (schema editor) on the element
+  5. The element mounts its framework (React/Angular) and binds to the control
+```
 
-### Color Picker (Angular)
+The control objects (`ValueControl`, `DocumentControl`, `RootDocumentControl`) provide:
+- Two-way data binding (`value`, `setValue`, `valueChanges`)
+- Validation state (`errors`, `status`, `addValidators`)
+- UI state (`disabled`, `readOnly`, `dirty`, `touched`)
+- Services (`gameData`, `undoRedo`, `uiState`, `translationLanguage`)
 
-A color input component supporting HEX and RGBA values, written in **Angular**, registered as a custom field editor for the `Text` data type.
+All control interfaces are defined in `charon-extensions`.
 
- [View Source Code](https://github.com/gamedevware/charon-extensions/tree/main/src/charon-color-picker)
-
-### Extension Base Types
-
-Shared TypeScript interfaces and helper definitions for implementing Charon-compatible extensions.
-
- [View Source Code](https://github.com/gamedevware/charon-extensions/tree/main/src/charon-extensions)
-
----
-
-## 🛠️ Building and Publishing
-
-To build and publish an extension as an NPM package:
+## Building & Publishing
 
 ```bash
-# Install dependencies
+cd src/<package-name>
 npm install
-
-# Build production bundle
 npm run build
-
-cd dist/browser # Angular
-# or
-cd dist # React
-
-npm publish
+# Output: dist/*.tgz (React) or dist/browser/*.tgz (Angular)
 ```
 
-Once packaged and Published to NPM, extensions can be added in Charon in:
-```
-Project Settings → Extensions
-```
+Install in Charon:
+- **From NPM**: Add the package name in **Project Settings > Extensions**, click **Update**.
+- **From local build**: Click **Upload NPM Package** in the extensions settings and select the `.tgz` file.
 
----
+## Key Differences: React vs Angular
 
-## 📚 Learn More
+| Aspect | React extensions | Angular extensions |
+|--------|------------------|--------------------|
+| Build tool | Vite | Angular CLI |
+| Custom element | Class extending `HTMLElement`, mounts React via `createRoot` | `@angular/elements` `createCustomElement` in `ngDoBootstrap` |
+| Change detection | React's own (hooks, state) | **Must be zoneless** (`provideExperimentalZonelessChangeDetection`) to avoid conflicts with Charon's zone.js |
+| Output directory | `dist/` | `dist/browser/` |
 
+## Documentation
+
+- [Charon Extensions Overview](https://gamedevware.github.io/charon/advanced/extensions/overview.html)
 - [Creating a Custom Editor with React](https://gamedevware.github.io/charon/advanced/extensions/creating_react_extension.html)
 - [Creating a Custom Editor with Angular](https://gamedevware.github.io/charon/advanced/extensions/creating_angular_extension.html)
-- [Charon UI Extensions Documentation](https://gamedevware.github.io/charon/advanced/extensions/overview.html)
-- [Charon Main Repository](https://github.com/gamedevware/charon)
-
----
+- [Charon Repository](https://github.com/gamedevware/charon)
 
 ## Contributing
 
-Feel free to fork this repository or open pull requests with improvements, new example editors, or bug fixes.
+Fork this repository or open pull requests with improvements, new example editors, or bug fixes.
 
----
-
-## 📝 License
+## License
 
 [MIT](LICENSE)
-
----
