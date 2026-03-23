@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/gamedevware/charon-extensions/refs/heads/main/package.json.schema.json",
   "name": "charon-conversation-editor",
-  "version": "0.0.32",
+  "version": "0.0.40",
   "description": "",
   "keywords": [
     "charon",
@@ -22,6 +22,14 @@
           "Schema"
         ]
       }
+    ],
+    "customActions": [
+      {
+        "name": "Create Conversation Schema",
+        "functionName": "createConversationSchema",
+        "location": "new-schema-menu",
+        "icon": "emoji/speech_balloon"
+      }
     ]
   },
   "main": "index.js",
@@ -38,7 +46,7 @@
   },
   "dependencies": {
     "@xyflow/react": "^12.8.6",
-    "charon-extensions": "2.325.398",
+    "charon-extensions": "file:../charon-extensions",
     "dagre": "^0.8.5",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",

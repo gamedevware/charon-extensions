@@ -23,6 +23,7 @@ export type OnFocusHandler = (valueControl: ValueControl, focused: boolean) => v
  */
 export type DoExpandHandler = (expand: boolean) => Promise<void>;
 
+/** The current validation/interaction status of a {@link ValueControl}. */
 export type ValueControlStatus = 'VALID' | 'INVALID' | 'PENDING' | 'DISABLED';
 
 /**
@@ -233,9 +234,25 @@ export declare interface ValueControl<TValue = any> {
      */
     markAsPending(opts?: ControlEventEmitOptions): void;
 
+    /**
+     * Makes this control writeable (editable)
+     * @param opts - Options for emitting control events
+     */
     makeWriteable(opts?: ControlEventEmitOptions): void;
+    /**
+     * Makes this control and all descendant controls writeable
+     * @param opts - Options for emitting control events
+     */
     makeAllWriteable(opts?: ControlEventEmitOptions): void;
+    /**
+     * Makes this control read-only (non-editable)
+     * @param opts - Options for emitting control events
+     */
     makeReadOnly(opts?: ControlEventEmitOptions): void;
+    /**
+     * Makes this control and all descendant controls read-only
+     * @param opts - Options for emitting control events
+     */
     makeAllReadOnly(opts?: ControlEventEmitOptions): void;
 
     /**
@@ -312,6 +329,10 @@ export declare interface ValueControl<TValue = any> {
      */
     hasError(errorCode: string, path?: Array<string | number> | string): boolean;
 
+    /**
+     * Returns a promise that resolves when all pending async validators have completed.
+     * @returns The final validation status after all validators finish.
+     */
     waitForValidationCompletion(): Promise<ValueControlStatus>;
 }
 
