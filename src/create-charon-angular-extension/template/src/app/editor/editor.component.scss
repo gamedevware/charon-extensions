@@ -1,0 +1,22 @@
+/* Include this file in src/styles.scss: @import './app/editor/editor.component'; */
+
+:host {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  padding: 4px;
+  gap: 4px;
+}
+
+.placeholder-label {
+  font-size: 0.75rem;
+  color: var(--mat-card-subtitle-text-color, #888);
+  margin: 0;
+}
+
+.placeholder-input {
+  flex: 1;
+  border: 1px solid var(--mat-card-subtitle-text-color, #ccc);
+  padding: 2px 4px;
+  outline: none;
+}

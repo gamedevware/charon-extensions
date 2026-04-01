@@ -1,0 +1,20 @@
+{
+  "name": "create-charon-angular-extension",
+  "version": "1.0.0",
+  "description": "Scaffold a Charon Angular extension project",
+  "bin": {
+    "create-charon-angular-extension": "./index.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "index.js",
+    "scaffold.js",
+    "template/"
+  ],
+  "scripts": {
+    "test": "node --test scaffold.test.js"
+  },
+  "license": "MIT"
+}
