@@ -7,6 +7,9 @@ function validateName(name) {
   if (!/^[a-z][a-z0-9-]*[a-z0-9]$|^[a-z]$/.test(name)) {
     return 'Name must start with a lowercase letter, contain only lowercase letters, digits, and hyphens, and cannot end with a hyphen.';
   }
+  if (/--/.test(name)) {
+    return 'Name must not contain consecutive hyphens.';
+  }
   return null;
 }
 

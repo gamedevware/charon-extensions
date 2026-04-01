@@ -31,6 +31,10 @@ test('validateName: rejects names starting with a digit', () => {
   assert.notEqual(validateName('1ext'), null);
 });
 
+test('validateName: rejects consecutive hyphens', () => {
+  assert.notEqual(validateName('foo--bar'), null);
+});
+
 test('deriveNames: derives all 6 identifiers from my-extension', () => {
   const n = deriveNames('my-extension');
   assert.equal(n.packageName,   'my-extension');
