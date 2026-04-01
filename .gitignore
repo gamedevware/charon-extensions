@@ -144,3 +144,4 @@ dist
 .angular
 .claude/settings.local.json
 CLAUDE.md
+docs/
