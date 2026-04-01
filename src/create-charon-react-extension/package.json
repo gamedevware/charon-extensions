@@ -1,0 +1,20 @@
+{
+  "name": "create-charon-react-extension",
+  "version": "1.0.0",
+  "description": "Scaffold a Charon React extension project",
+  "bin": {
+    "create-charon-react-extension": "./index.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "index.js",
+    "scaffold.js",
+    "template/"
+  ],
+  "scripts": {
+    "test": "node --test scaffold.test.js"
+  },
+  "license": "MIT"
+}
