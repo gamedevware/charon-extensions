@@ -37,7 +37,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "charon-extensions": "2.363.426",
+    "charon-extensions": "2.378.450",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "rxjs": "^7.8.0",
