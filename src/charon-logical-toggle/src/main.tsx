@@ -6,7 +6,7 @@ import LogicalToggleElement from './LogicalToggleElement.tsx'
 customElements.define("ext-logical-toggle-editor", LogicalToggleElement);
 
 // tell TS that <ext-logical-toggle-editor> is a custom element
-declare global {
+declare module "react" {
     // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace JSX {
         interface IntrinsicElements {

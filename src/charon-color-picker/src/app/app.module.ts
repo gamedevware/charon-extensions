@@ -1,4 +1,4 @@
-import { Injector, NgModule, provideExperimentalZonelessChangeDetection } from '@angular/core';
+import { Injector, NgModule, provideZonelessChangeDetection } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { createCustomElement } from '@angular/elements';
 import { ColorPickerEditorComponent } from './color.picker/color.picker.component';
@@ -11,7 +11,7 @@ import { ColorPickerModule } from './color.picker/color.picker.module';
     ColorPickerModule,
   ],
    // disable default zones.js and change detection
-  providers: [provideExperimentalZonelessChangeDetection()],
+  providers: [provideZonelessChangeDetection()],
 
   // remove default bootstrap component here
   bootstrap: [] 

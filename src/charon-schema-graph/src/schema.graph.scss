@@ -1,0 +1,19 @@
+.ext-sg-graph {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+}
+
+.ext-sg-message {
+  padding: 16px;
+  font-size: 14px;
+  color: var(--app-color-dark-gray, #666666);
+}
+
+.ext-sg-message.ext-sg-error {
+  color: var(--app-color-warn, #FF6E6E);
+}
+
+.ext-sg-error-container {
+  padding: 16px;
+}

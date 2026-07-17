@@ -135,7 +135,7 @@ export async function migrateSchema(conversationSchema: Schema | null, dataSourc
 
 export async function createConversationSchema(context: ExtensionActionContext) {
     const abortSignal = new AbortController();
-    const progressRef = context.ui.dialog.showProgress({
+    const progressRef = context.services.ui?.dialog?.showProgress({
         title: 'Creating Conversation Schemas',
         progressMode: 'determinate',
         cancellable: true,
@@ -143,16 +143,16 @@ export async function createConversationSchema(context: ExtensionActionContext) 
     });
 
     try {
-        await migrateSchema(null, context.gameData, progressRef, abortSignal);
-        context.ui.snackBar.saveSucceed();
-        progressRef.close();
+        await migrateSchema(null, context.services.gameData, progressRef, abortSignal);
+        context.services.ui?.snackBar?.saveSucceed();
+        progressRef?.close();
 
     } catch (error) {
         if (abortSignal.signal.aborted) { return; }
 
-        context.ui.snackBar.saveFailed(error);
-        progressRef.setFaulted();
-        progressRef.close(3000);
+        context.services.ui?.snackBar?.saveFailed(error);
+        progressRef?.setFaulted();
+        progressRef?.close(3000);
         console.error(error);
     }
 }

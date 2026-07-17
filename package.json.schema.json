@@ -98,23 +98,72 @@
                                     },
                                     "functionName": {
                                         "type": "string",
-                                        "minLength": 1
+                                        "minLength": 1,
+                                        "description": "Name of the exported function to call with the action context. Mutually exclusive with 'pageId' — set exactly one."
+                                    },
+                                    "pageId": {
+                                        "type": "string",
+                                        "minLength": 1,
+                                        "description": "Id of a page in this same package's own 'customPages'. When set, the action navigates to that page instead of calling a function. Mutually exclusive with 'functionName' — set exactly one."
                                     },
                                     "location": {
                                         "type": "string",
                                         "enum": [
                                             "new-schema-menu",
                                             "document-action-menu",
-                                            "grid-action-menu"
+                                            "document-list-action-menu",
+                                            "side-navigation-menu"
                                         ]
                                     }
                                 },
                                 "required": [
                                     "name",
-                                    "functionName",
                                     "location"
                                 ],
+                                "oneOf": [
+                                    {
+                                        "required": ["functionName"],
+                                        "not": { "required": ["pageId"] }
+                                    },
+                                    {
+                                        "required": ["pageId"],
+                                        "not": { "required": ["functionName"] }
+                                    }
+                                ],
                                 "additionalProperties": false
+                            }
+                        },
+                        "customPages": {
+                            "type": ["array", "null"],
+                            "items": {
+                                "type": "object",
+                                "additionalProperties": false,
+                                "required": [
+                                    "id",
+                                    "selector",
+                                    "title"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "type": "string",
+                                        "minLength": 1,
+                                        "description": "Unique identifier of the page, used as a URL segment. Typically starts with 'ext', e.g., 'ext-sample-page'."
+                                    },
+                                    "selector": {
+                                        "type": "string",
+                                        "minLength": 1,
+                                        "description": "Custom HTML element name registered with 'customElements.define'. Typically starts with 'ext', e.g., 'ext-sample-page-element'."
+                                    },
+                                    "title": {
+                                        "type": "string",
+                                        "minLength": 1,
+                                        "description": "Browser tab title and breadcrumb fallback text for the page."
+                                    },
+                                    "breadcrumb": {
+                                        "type": "string",
+                                        "description": "Breadcrumb text for the page. Falls back to 'title' when absent."
+                                    }
+                                }
                             }
                         }
                     }

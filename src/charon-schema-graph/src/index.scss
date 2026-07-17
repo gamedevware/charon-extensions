@@ -1,0 +1,22 @@
+:root {
+  font-family: 'Inter', sans-serif;
+  line-height: 115%;
+  font-size: 15px;
+
+  --app-color-text-default: black;
+  --app-color-light-gray: #EBEBEB;
+  --app-color-gray: #B2B2B2;
+  --app-color-dark-gray: #666666;
+  --app-color-warn: #FF6E6E;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.ext-schema-graph-page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}

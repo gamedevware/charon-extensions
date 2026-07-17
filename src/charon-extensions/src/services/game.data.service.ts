@@ -1,10 +1,13 @@
 import { DataDocument, DataDocumentMeta, DataDocumentValue, GameDataDocument } from "../controls";
+import { Metadata } from "../metadata";
 import { ObservableLike } from "../reactive";
 
 /** Service for querying and modifying game data documents on the server. */
 export interface GameDataService {
     /** Returns the current game data project identifier. */
     getId(): ObservableLike<string>;
+
+    getMetadata(): ObservableLike<Metadata>;
 
     /** Finds a single document by a unique property value. */
     find(schemaNameOrId: string, uniqueSchemaPropertyNameOrId: string, uniqueSchemaPropertyValue: string): ObservableLike<FindResult>;

@@ -1,30 +1,33 @@
 {
   "$schema": "https://raw.githubusercontent.com/gamedevware/charon-extensions/refs/heads/main/package.json.schema.json",
-  "name": "charon-logical-toggle",
-  "version": "1.0.8",
-  "description": "",
+  "name": "charon-schema-graph",
+  "version": "1.0.0",
+  "description": "Read-only schema reference graph example extension for Charon, demonstrating custom pages and side-navigation custom actions.",
   "keywords": [
     "charon",
     "extensions",
-    "color picker"
+    "schema graph",
+    "custom page"
   ],
   "homepage": "https://github.com/gamedevware/charon-extensions",
   "bugs": "https://github.com/gamedevware/charon-extensions/issues",
   "author": "GameDevWare, Denis Zykov",
   "license": "MIT",
   "config": {
-    "customEditors": [
+    "customPages": [
       {
-        "id": "ext-logical-toggle",
-        "selector": "ext-logical-toggle-editor",
-        "name": "Logical Toggle",
-        "type": [
-          "Property",
-          "Grid"
-        ],
-        "dataTypes": [
-          "Logical"
-        ]
+        "id": "ext-schema-graph",
+        "selector": "ext-schema-graph-page",
+        "title": "Schema Graph",
+        "breadcrumb": "Schema Graph"
+      }
+    ],
+    "customActions": [
+      {
+        "name": "Schema Graph",
+        "location": "side-navigation-menu",
+        "pageId": "ext-schema-graph",
+        "icon": "emoji/spider_web"
       }
     ]
   },
@@ -40,18 +43,19 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@xyflow/react": "^12.11.2",
     "charon-extensions": "file:../charon-extensions",
-    "prop-types": "^15.8.1",
+    "dagre": "^0.8.5",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
-    "react-toggle": "^4.1.3",
+    "rxjs": "^7.8.2",
     "sass": "^1.101.0"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@types/dagre": "^0.7.54",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
-    "@types/react-toggle": "^4.0.5",
     "@vitejs/plugin-react": "^6.0.3",
     "eslint": "^10.7.0",
     "eslint-plugin-react-hooks": "^7.1.1",

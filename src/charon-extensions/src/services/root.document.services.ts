@@ -4,6 +4,8 @@ import { DataDocumentValue } from "../controls/data.document";
 import { FindResult, GameDataService, ListDocumentParameters, ListResult } from "./game.data.service";
 import { DocumentScopedUiStateService } from "./preference.service";
 import { UndoRedoService } from "./undo.redo.service";
+import { UiDialogService } from "./ui.dialog.service";
+import { UiSnackBarService } from "./ui.snack.bar.service";
 
 /** Services available on a {@link RootDocumentControl}, providing validation, translation, data access, and UI state management. */
 export interface RootDocumentControlServices {
@@ -40,8 +42,15 @@ export interface RootDocumentControlServices {
     readonly gameData: GameDataService;
     /** Undo/redo history management for the current document. */
     readonly undoRedo: UndoRedoService;
-    /** Service for persisting document-scoped UI state across sessions. */
+    /** @deprecated Use {@link RootDocumentControlServices.ui}'s `state` field instead. Kept as a same-instance alias for backward compatibility — it is never a different object. */
     readonly uiState: DocumentScopedUiStateService;
+    /** UI services for state, dialogs, and notifications. */
+    readonly ui: {
+        /** Service for persisting document-scoped UI state across sessions. Same instance as the deprecated top-level {@link RootDocumentControlServices.uiState} — this is the field to use going forward. */
+        readonly state: DocumentScopedUiStateService;
+        readonly dialog: UiDialogService;
+        readonly snackBar: UiSnackBarService;
+    };
     /** Low-level server API client. Intentionally untyped — API surface is not stable. */
     readonly serverApiClient: any;
 }
