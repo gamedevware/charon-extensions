@@ -3,7 +3,7 @@ import { ConversationContext } from "../state";
 import { NodeChange, OnNodesChange, useReactFlow } from "@xyflow/react";
 import { DialogFlowNode, DialogFlowEdge } from "../nodes/node.types";
 import dagre from 'dagre';
-import { UndoRedoContext } from '../state';
+import { useUndoRedo } from '../state';
 
 /**
  * AutoLayoutButton component that provides automatic node arrangement using Dagre layout algorithm
@@ -13,7 +13,7 @@ function AutoLayoutButton({ onNodesChange, enabled }: { onNodesChange: OnNodesCh
     const [disabled, setDisabled] = useState(true);
     const { conversationTreeControl } = useContext(ConversationContext);
     const { getNodes, getEdges, fitView } = useReactFlow<DialogFlowNode, DialogFlowEdge>();
-    const { saveState } = useContext(UndoRedoContext);
+    const { barrier } = useUndoRedo();
 
     /**
      * Handles auto layout functionality using Dagre graph layout library
@@ -77,8 +77,9 @@ function AutoLayoutButton({ onNodesChange, enabled }: { onNodesChange: OnNodesCh
         // Step 7: Fit the view to show all laid out nodes
         fitView();
 
-        // Step 8: Save state for undo/redo functionality
-        saveState();
+        // Step 8: Seal the auto-layout as its own undo step, so it doesn't merge with
+        // whatever edit comes next (the host auto-batches rapid changes by elapsed time).
+        barrier();
 
         /**
          * Calculates node width with fallback values
@@ -95,7 +96,7 @@ function AutoLayoutButton({ onNodesChange, enabled }: { onNodesChange: OnNodesCh
         function getHeight(node: DialogFlowNode) {
             return node.height ?? node.measured?.height ?? 300;
         }
-    }, [fitView, getEdges, getNodes, onNodesChange, saveState]);
+    }, [fitView, getEdges, getNodes, onNodesChange, barrier]);
 
     /**
      * Effect to enable/disable button based on node presence

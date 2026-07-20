@@ -27,6 +27,16 @@ export interface UndoRedoService {
      */
     push(action: { redo: () => void; undo: () => void }, batcher?: (prev: typeof action, elapsedMs: number) => typeof action): void;
 
+    /**
+     * Marks a hard boundary in the undo/redo history: the next auto-tracked or pushed change
+     * will always start a new undo step, even if it would otherwise be merged into the current
+     * top-of-stack entry by the service's default time-based auto-batching (e.g. several rapid
+     * edits within the same short window normally coalesce into one step). Has no effect on
+     * changes already recorded — it only affects the next one. Safe to call at any time,
+     * including when the history is empty.
+     */
+    barrier(): void;
+
     /** Clears all undo/redo history. */
     clear(): void;
 }

@@ -96,6 +96,15 @@ function createDevContextServices(): ExtensionContextServices {
             dialog: {
                 showProgress: () => { throw new Error('showProgress() not implemented in dev harness'); },
                 showCustom: () => { throw new Error('showCustom() not implemented in dev harness'); },
+                showCodeSnippet: () => { throw new Error('showCodeSnippet() not implemented in dev harness'); },
+                showBackupWizard: () => { throw new Error('showBackupWizard() not implemented in dev harness'); },
+                showExportLocalizationWizard: () => { throw new Error('showExportLocalizationWizard() not implemented in dev harness'); },
+                showExportWizard: () => { throw new Error('showExportWizard() not implemented in dev harness'); },
+                showImportLocalizationWizard: () => { throw new Error('showImportLocalizationWizard() not implemented in dev harness'); },
+                showImportWizard: () => { throw new Error('showImportWizard() not implemented in dev harness'); },
+                showPublicationWizard: () => { throw new Error('showPublicationWizard() not implemented in dev harness'); },
+                showRestoreWizard: () => { throw new Error('showRestoreWizard() not implemented in dev harness'); },
+                showSourceCodeGenerationWizard: () => { throw new Error('showSourceCodeGenerationWizard() not implemented in dev harness'); },
             },
             snackBar: {
                 loadStarted: () => console.log('[dev] snackBar.loadStarted()'),

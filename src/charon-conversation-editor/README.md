@@ -86,8 +86,7 @@ src/
   state/                            # App-level state and context
     conversation.state.ts           #   Converts between Charon data format and React Flow format
     conversation.context.ts         #   React context for sharing conversation state
-    undo.redo.state.ts              #   Undo/redo state tracking
-    undo.redo.context.ts            #   React context for undo/redo
+    undo.redo.context.ts            #   React context for the host's UndoRedoService
     use.undo.redo.function.ts       #   Hook: wires into Charon's UndoRedoService
     use.localized.text.ts           #   Hook: resolves localized text for current language
 

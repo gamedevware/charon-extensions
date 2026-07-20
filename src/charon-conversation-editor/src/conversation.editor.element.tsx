@@ -6,7 +6,6 @@ import { ReactFlowProvider } from "@xyflow/react";
 import { ConversationContext } from "./state/conversation.context";
 import { ConversationState } from "./state";
 import { UndoRedoContext } from "./state/undo.redo.context";
-import { UndoRedoState } from "./state/undo.redo.state";
 import { ErrorBoundary } from "./error.boundary";
 import { validateSchema } from "./schema.validation";
 import SchemaValidationResult from "./schema.validation/schema.validation.result";
@@ -78,7 +77,7 @@ export default class ConversationEditorElement extends HTMLElement implements Ch
         <ErrorBoundary>
           <ReactFlowProvider>
             <ConversationContext value={new ConversationState(this._documentControl)}>
-              <UndoRedoContext value={new UndoRedoState(this._documentControl)}>
+              <UndoRedoContext value={this._documentControl.services.undoRedo}>
                 {isValidSchema ? <ConversationEditor /> : <SchemaValidationResult documentControl={this._documentControl} />}
               </UndoRedoContext>
             </ConversationContext>

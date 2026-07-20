@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { UndoRedoState } from "./undo.redo.state";
-import { createDevValueControl } from "../dev";
+import { UndoRedoService } from "charon-extensions";
 
-export const UndoRedoContext = createContext(new UndoRedoState(createDevValueControl({})))
+/** The host-provided undo/redo service for the current document, or undefined if the host didn't provide one. */
+export const UndoRedoContext = createContext<UndoRedoService | undefined>(undefined);

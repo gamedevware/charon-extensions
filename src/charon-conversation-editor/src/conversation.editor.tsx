@@ -6,7 +6,7 @@ import './styles/property.drawer.css';
 import './styles/error.boundary.css';
 import './styles/schema.validation.css';
 
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { ReactFlow, MiniMap, Controls, Background, BackgroundVariant } from '@xyflow/react';
 import { useControlToFlowSync, useSelectedContronMonitor } from './nodes';
 import { nodeTypes, getNodeClassName } from './nodes/node.types';
@@ -14,7 +14,7 @@ import PropertyDrawer from './property.drawer/property.drawer';
 import UndoButton from './controls/undo.button';
 import RedoButton from './controls/redo.button';
 import AutoLayoutButton from './controls/auto.layout.button';
-import { UndoRedoContext } from './state';
+import { useUndoRedo } from './state';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useControlCopyPasteMonitor } from './nodes/use.control.copy.paste.monitor';
 import { useDeleteControlHandler } from './nodes/use.delete.control.handler';
@@ -35,7 +35,7 @@ function ConversationEditor() {
   const [interactive, setInteractive] = useState(true);
   const [focusedDocumentConntrol, focusHandler] = useSelectedContronMonitor();
   const [copyToClipboard, pasteFromClipboard, duplicate] = useControlCopyPasteMonitor(focusedDocumentConntrol);
-  const { saveState: saveUndoRedoState, undo, redo } = useContext(UndoRedoContext);
+  const { undo, redo, barrier } = useUndoRedo();
   const deleteControl = useDeleteControlHandler(focusedDocumentConntrol);
 
   // Keyboard shortcuts for editor operations
@@ -62,8 +62,8 @@ function ConversationEditor() {
           onEdgesChange={interactive ? onEdgesChange : noop}
           onConnect={interactive ? onConnect : noop}
           onConnectEnd={interactive ? onConnectEnd : noop}
-          onFocus={saveUndoRedoState}
-          onBlur={saveUndoRedoState}
+          onFocus={barrier}
+          onBlur={barrier}
         />
         <MiniMap zoomable pannable nodeClassName={getNodeClassName} />
         <Controls onInteractiveChange={setInteractive} >
