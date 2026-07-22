@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/gamedevware/charon-extensions/refs/heads/main/package.json.schema.json",
   "name": "charon-schema-graph",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Read-only schema reference graph example extension for Charon, demonstrating custom pages and side-navigation custom actions.",
   "keywords": [
     "charon",
@@ -38,7 +38,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build && copy package.json dist\\package.json && cd dist && npm pack",
+    "build": "tsc -b && vite build && cd dist && npm pack",
     "lint": "eslint .",
     "preview": "vite preview"
   },

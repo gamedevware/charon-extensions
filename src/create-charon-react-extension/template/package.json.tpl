@@ -32,7 +32,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build && node -e \"require('fs').copyFileSync('package.json','dist/package.json')\" && cd dist && npm pack",
+    "build": "tsc -b && vite build && cd dist && npm pack",
     "lint": "eslint .",
     "preview": "vite preview"
   },

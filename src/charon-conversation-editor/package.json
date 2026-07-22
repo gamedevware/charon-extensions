@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/gamedevware/charon-extensions/refs/heads/main/package.json.schema.json",
   "name": "charon-conversation-editor",
-  "version": "0.0.40",
+  "version": "0.0.42",
   "description": "",
   "keywords": [
     "charon",
@@ -29,50 +29,6 @@
         "functionName": "createConversationSchema",
         "location": "new-schema-menu",
         "icon": "emoji/speech_balloon"
-      },
-      {
-        "name": "Log Document Context",
-        "functionName": "logDocumentContext",
-        "location": "document-action-menu",
-        "icon": "emoji/speech_balloon"
-      },
-      {
-        "name": "Log List Context",
-        "functionName": "logListContext",
-        "location": "document-list-action-menu",
-        "icon": "emoji/speech_balloon"
-      },
-      {
-        "name": "Open Custom Dialog",
-        "functionName": "openCustomDialog",
-        "location": "new-schema-menu",
-        "icon": "emoji/speech_balloon"
-      },
-      {
-        "name": "Open Custom Page",
-        "functionName": "openCustomPage",
-        "location": "new-schema-menu",
-        "icon": "emoji/speech_balloon"
-      },
-      {
-        "name": "Design/Conversation Tools",
-        "pageId": "ext-sample-page",
-        "location": "side-navigation-menu",
-        "icon": "emoji/speech_balloon"
-      },
-      {
-        "name": "Ping From Nav",
-        "functionName": "pingFromNav",
-        "location": "side-navigation-menu",
-        "icon": "emoji/speech_balloon"
-      }
-    ],
-    "customPages": [
-      {
-        "id": "ext-sample-page",
-        "selector": "ext-sample-page-element",
-        "title": "Sample Page",
-        "breadcrumb": "Sample"
       }
     ]
   },
@@ -84,7 +40,7 @@
   "scripts": {
     "start": "vite",
     "dev": "vite",
-    "build": "tsc -b && vite build && copy package.json dist\\package.json && cd dist && npm pack",
+    "build": "tsc -b && vite build && cd dist && npm pack",
     "lint": "eslint .",
     "preview": "vite preview"
   },
