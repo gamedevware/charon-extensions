@@ -16,6 +16,7 @@ export function useDebounce<T extends (...args: any) => any>(fn: T, delayMs: num
 export function usePerKeyDebounce<T extends (...args: any) => any, KeyT = any>(fn: T, delayMs: number, keySelector: (args: Parameters<T>) => KeyT): T {
     const timeoutById = useRef<Map<KeyT, number>>(new Map());
 
+    // eslint-disable-next-line react-hooks/use-memo
     return useCallback(function distinctDebounce(...args: Parameters<T>) {
         const key = keySelector(args);
         const prevTimeoutId = timeoutById.current.get(key);

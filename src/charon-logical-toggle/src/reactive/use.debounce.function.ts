@@ -19,6 +19,7 @@ import { useCallback, useRef } from "react";
 export function useDebounce<T extends (...args: any) => any>(fn: T, delayMs: number): T {
     const timeoutId = useRef<number>(undefined);
 
+    // eslint-disable-next-line react-hooks/use-memo
     return useCallback(function debounce(...args: any[]) {
         if (timeoutId.current) {
             clearTimeout(timeoutId.current);
