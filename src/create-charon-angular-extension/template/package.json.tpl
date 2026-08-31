@@ -58,7 +58,7 @@
     "@angular/platform-browser": "^19.2.0",
     "@angular/platform-browser-dynamic": "^19.2.0",
     "@webcomponents/custom-elements": "^1.6.0",
-    "charon-extensions": "2.378.450",
+    "charon-extensions": "2.416.496",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   }

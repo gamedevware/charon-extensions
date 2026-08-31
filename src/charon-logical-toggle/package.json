@@ -40,7 +40,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "charon-extensions": "file:../charon-extensions",
+    "charon-extensions": "2.416.496",
     "prop-types": "^15.8.1",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
